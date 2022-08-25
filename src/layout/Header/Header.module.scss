@@ -1,0 +1,148 @@
+header {
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+        display: flex;
+        align-items: center;
+        font-size: 25px;
+
+        svg {
+            margin-right: 10px;
+        }
+    }
+
+    padding: 10px 0;
+    border-bottom: 2px solid var(--light-grey);
+
+    menu {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        justify-content: center;
+        gap: 60px;
+
+        .item {
+            display: flex;
+            width: 35px;
+            height: 35px;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 22px;
+            transition: 0.5s;
+
+            &:nth-child(4) {
+                transform: rotateY(-180deg);
+
+                &:hover {
+                    transform: scale(1.2) rotateY(-180deg);
+                }
+            }
+
+            svg {
+                fill: var(--text);
+                width: 35px;
+                height: 35px;
+            }
+
+            &:hover {
+                transform: scale(1.1);
+                color: var(--primary);
+
+                svg {
+                    fill: var(--primary);
+                }
+            }
+        }
+    }
+
+    .burger {
+        display: none;
+        position: relative;
+        width: 43px;
+        cursor: pointer;
+        appearance: none;
+        background: none;
+        outline: none;
+        border: none;
+        z-index: 9;
+        padding: 0;
+    }
+
+    .burger .bar,
+    .burger::before,
+    .burger::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 5px;
+        background-color: var(--text);
+        margin: 6px 0;
+        transition: 0.4s;
+        z-index: 999;
+        animation: visibility 0.4s linear;
+        border-radius: 20px;
+
+        @keyframes visibility {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0px);
+            }
+        }
+    }
+    .burgerActive::before {
+        transform: rotate(-45deg) translate(-7px, 8px);
+    }
+    .burgerActive::after {
+        transform: rotate(45deg) translate(-8px, -8px);
+    }
+    .burgerActive .bar {
+        animation: hide 0.4s linear;
+        opacity: 0;
+
+        @keyframes hide {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+        }
+    }
+
+    @media (max-width: 867px) {
+        .logo {
+            svg {
+                display: none;
+            }
+        }
+
+        menu {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 720px) {
+        .burger {
+            display: block;
+        }
+
+        .logo {
+            display: none;
+        }
+        menu {
+            .item {
+                &:nth-child(-n + 3) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
