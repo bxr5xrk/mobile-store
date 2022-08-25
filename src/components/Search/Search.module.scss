@@ -1,0 +1,37 @@
+.search {
+    position: relative;
+
+    button {
+        text-align: left;
+        border-radius: 30px;
+        background-color: transparent;
+        border: 2px solid var(--light-grey);
+        padding: 12px 15px;
+        padding-left: 52px;
+        width: 300px;
+        color: var(--light-grey);
+        font-weight: 600;
+        transition: 0.5s;
+        cursor: pointer;
+
+        svg {
+            position: absolute;
+            fill: var(--light-grey);
+            left: 15px;
+            transition: 0.5s;
+        }
+
+        &:hover {
+            border: 2px solid var(--primary);
+
+            svg {
+                fill: var(--primary);
+            }
+        }
+        @media (max-width: 442px) {
+            padding: 9px 15px;
+            padding-left: 48px;
+            width: 200px;
+        }
+    }
+}
