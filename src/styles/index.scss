@@ -2,30 +2,25 @@
 
 body {
     margin: 0;
-    font-family: "Inter", sans-serif;
+    font-family: "Nunito", sans-serif;
     background-color: var(--background);
     color: var(--text);
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
-    width: 100vw;
     justify-content: center;
     max-width: 1400px;
     margin: 0 auto;
 }
 
 :root {
-    --primary: #a74daf;
+    --primary: #fe5f1e;
     --grey: rgb(61, 61, 61);
+    --light-grey: rgb(146, 146, 146);
 }
 
-.wrapper {
-    padding: 25px;
+#root {
+    padding: 0 10px;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
-    gap: 20px 40px;
-    grid-template-areas:
-        ". header"
-        "nav main";
 }

@@ -1,11 +1,13 @@
 import request from "graphql-request";
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CONTENT_API } from "../../.config";
+import Products from "../../components/Products/Products";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
-const HomePage: FC = () => {
+const ProductsPage: FC = () => {
     const [products, setProducts] = useState(null);
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -50,11 +52,13 @@ const HomePage: FC = () => {
     }, [i18n.language]);
 
     console.log(products, i18n.language);
+
     return (
-        <>
-            <h1>{t("title")}</h1>
-        </>
+        <main>
+            <Sidebar />
+            <Products />
+        </main>
     );
 };
 
-export default HomePage;
+export default ProductsPage;
