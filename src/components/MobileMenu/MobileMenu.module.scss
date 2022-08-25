@@ -32,6 +32,11 @@
         padding: 15px;
         border-bottom: 1px solid var(--text);
 
+        a {
+            color: var(--text);
+            font-weight: 700;
+        }
+
         &:nth-child(4) {
             border: none;
         }
