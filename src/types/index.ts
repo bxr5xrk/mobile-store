@@ -1,15 +1,15 @@
-interface IDeviceImage {
+export interface IDeviceImage {
     id: number;
     imageHref: string;
 }
 
-interface IDeviceStorage {
+export interface IDeviceStorage {
     id: number;
     price: number;
     romRam: string;
 }
 
-interface IDeviceColor {
+export interface IDeviceColor {
     id: number;
     color: string;
 }
@@ -30,4 +30,5 @@ export interface IDevice {
     addingDate: string;
     images: IDeviceImage[];
     specs: IDeviceSpecs;
+    slug: string;
 }
