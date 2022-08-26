@@ -5,5 +5,7 @@ export const en = {
         watchlist: "Watchlist",
         cart: "Cart",
         theme: "Theme",
+        productsTitle: "All models",
+        from: 'From',
     },
 };

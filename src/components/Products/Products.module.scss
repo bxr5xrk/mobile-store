@@ -1,0 +1,10 @@
+.root {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    .listItems {
+        display: flex;
+        justify-content: center;
+    }
+}

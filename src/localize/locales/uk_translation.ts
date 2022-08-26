@@ -4,6 +4,8 @@ export const uk = {
         linkToProdutsPage: "Перейти на сторінку товарів",
         watchlist: "Обране",
         cart: "Корзина",
-        theme: 'Тема'
+        theme: 'Тема',
+        productsTitle: 'Всі моделі',
+        from: 'Від',
     },
 };

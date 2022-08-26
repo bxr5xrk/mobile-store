@@ -6,6 +6,7 @@ import Products from "../../components/Products/Products";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { selectProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../store/store";
+import st from "./ProductsPage.module.scss";
 
 const ProductsPage: FC = () => {
     const { devices, status } = useSelector(selectProducts);
@@ -24,7 +25,7 @@ const ProductsPage: FC = () => {
     console.log(devices, status);
 
     return (
-        <main>
+        <main className={st.root}>
             <Sidebar />
             <Products />
         </main>
