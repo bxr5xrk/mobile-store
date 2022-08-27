@@ -1,6 +1,6 @@
 import { t } from "i18next";
 import { FC } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IDeviceColor, IDeviceImage } from "../../types";
 import st from "./Product.module.scss";
 
