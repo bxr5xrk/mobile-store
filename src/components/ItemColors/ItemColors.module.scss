@@ -1,0 +1,12 @@
+.root {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+
+    span {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+    }
+}
