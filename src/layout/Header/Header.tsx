@@ -27,6 +27,12 @@ export const Header = () => {
         localStorage.setItem("theme", theme);
     }, [theme]);
 
+    const changeCookie = () => {
+        i18n.changeLanguage(i18n.language === "en" ? "uk" : "en");
+        document.cookie = "";
+        document.cookie = `lang=${i18n.language}; path=/`;
+    };
+
     return (
         <>
             <header>
@@ -80,14 +86,7 @@ export const Header = () => {
                 <Search />
 
                 <menu>
-                    <div
-                        className={st.item}
-                        onClick={() =>
-                            i18n.changeLanguage(
-                                i18n.language === "en" ? "uk" : "en"
-                            )
-                        }
-                    >
+                    <div className={st.item} onClick={changeCookie}>
                         <p>{i18n.language === "uk" ? "УКР" : "EN"}</p>
                     </div>
 

@@ -9,9 +9,14 @@ const resources = {
     uk,
 };
 
+const setCookie = () => {
+    document.cookie = "lang=uk";
+    return "uk";
+};
+
 i18n.use(initReactI18next).init({
     resources,
-    lng: getCookie("lang") ? getCookie("lang") : "en",
+    lng: getCookie("lang") ? getCookie("lang") : setCookie(),
     interpolation: {
         escapeValue: false,
     },
