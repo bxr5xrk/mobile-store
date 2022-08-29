@@ -1,4 +1,4 @@
-import { fetchProducts } from "./../../api/AlloService";
+import { Service } from "./../../api/AlloService";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IDevice } from "../../types";
 import { RootState } from "../store";
@@ -22,18 +22,18 @@ const productsSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchProducts.pending, (state) => {
+        builder.addCase(Service.fetchProducts.pending, (state) => {
             state.status = "loading";
             state.devices = [];
         });
         builder.addCase(
-            fetchProducts.fulfilled,
+            Service.fetchProducts.fulfilled,
             (state, action: PayloadAction<IDevice[]>) => {
                 state.status = "success";
                 state.devices = action.payload;
             }
         );
-        builder.addCase(fetchProducts.rejected, (state) => {
+        builder.addCase(Service.fetchProducts.rejected, (state) => {
             state.status = "rejected";
             state.devices = [];
         });

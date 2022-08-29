@@ -1,47 +1,43 @@
 import { IDevice } from "./../types/index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import request, { gql } from "graphql-request";
+import request from "graphql-request";
 import { CONTENT_API } from "../.config";
+import { QUERY, QUERY_SINGLE } from "../schema/query";
 
-const QUERY = gql`
-    query fetchDevices {
-        devices {
-            id
-            deviceName
-            specs {
-                deviceColor {
-                    color
-                    id
-                }
-                storage {
-                    romRam
-                    id
-                    price
-                }
-                brand
-                battery
-                displaySize
-                processor
-                id
-            }
-            addingDate
-            slug
-            images {
-                imageHref
-                id
-            }
+export class Service {
+    static fetchProducts = createAsyncThunk(
+        "products/fetchProducts",
+        async () => {
+            const { devices } = await request<{ devices: IDevice[] }>(
+                CONTENT_API,
+                QUERY
+            );
+
+            return devices;
         }
-    }
-`;
+    );
+    static fetchProduct = async (
+        setProduct: (p: IDevice | "error") => void,
+        slug: string
+    ) => {
+        try {
+            const variables = {
+                slug,
+            };
 
-export const fetchProducts = createAsyncThunk(
-    "products/fetchProducts",
-    async () => {
-        const { devices } = await request<{ devices: IDevice[] }>(
-            CONTENT_API,
-            QUERY
-        );
+            const { device } = await request<{ device: IDevice }>(
+                CONTENT_API,
+                QUERY_SINGLE,
+                variables
+            );
 
-        return devices;
-    }
-);
+            if (device !== null) {
+                return setProduct(device);
+            } else {
+                return setProduct("error");
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    };
+}
