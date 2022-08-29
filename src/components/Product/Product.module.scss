@@ -1,4 +1,49 @@
 .root {
     display: flex;
     flex-direction: column;
+    border-radius: 20px;
+    margin: 15px;
+    text-align: left;
+    
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
+
+    .stats {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 15px;
+
+        h2 {
+            display: inline-block;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+    }
+
+    &__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+
+        .icons {
+            display: flex;
+            gap: 15px;
+        }
+        svg {
+            cursor: pointer;
+            fill: var(--primary);
+            width: 25px;
+            height: 25px;
+
+            &:nth-child(2) {
+                margin-top: -2px;
+                transform: rotateY(180deg);
+            }
+        }
+    }
 }
