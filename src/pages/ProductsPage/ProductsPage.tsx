@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { fetchProducts } from "../../api/AlloService";
+import { Service } from "../../api/AlloService";
 import Products from "../../components/Products/Products";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import { selectProducts } from "../../store/slices/productsSlice";
@@ -13,7 +13,7 @@ const ProductsPage: FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(fetchProducts());
+        dispatch(Service.fetchProducts());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

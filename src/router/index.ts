@@ -6,6 +6,6 @@ import ProductPage from "../pages/ProductPage/ProductPage";
 export const routes = [
     { path: "/", element: LandingPage },
     { path: "/products", element: ProductsPage },
-    { path: "/product", element: ProductPage },
+    { path: "/products/:slugParams", element: ProductPage },
     { path: "/cart", element: Cart },
 ];
