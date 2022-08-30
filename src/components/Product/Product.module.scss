@@ -4,7 +4,7 @@
     border-radius: 20px;
     margin: 15px;
     text-align: left;
-    
+    color: var(--text);
 
     &:hover {
         img {
@@ -34,11 +34,16 @@
             display: flex;
             gap: 15px;
         }
+
         svg {
             cursor: pointer;
             fill: var(--primary);
             width: 25px;
             height: 25px;
+
+            .heart {
+                fill: var(--primary);
+            }
 
             &:nth-child(2) {
                 margin-top: -2px;
