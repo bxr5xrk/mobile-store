@@ -23,7 +23,7 @@ const ProductPage: FC = () => {
             Service.fetchProduct(setProduct, slugParams);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [slugParams]);
 
     if (product === "error") {
         return <p>error</p>;
