@@ -12,16 +12,7 @@ export interface IDeviceStorage {
 export interface IDeviceColor {
     id: number;
     color: string;
-}
-
-interface IDeviceSpecs {
-    id: number;
-    battery: string;
-    brand: string;
-    displaySize: number;
-    processor: string;
-    deviceColor: IDeviceColor[];
-    storage: IDeviceStorage[];
+    additionalPrice: number;
 }
 
 export interface IDevice {
@@ -29,6 +20,11 @@ export interface IDevice {
     deviceName: string;
     addingDate: string;
     images: IDeviceImage[];
-    specs: IDeviceSpecs;
     slug: string;
+    battery: string;
+    brand: string;
+    displaySize: number;
+    processor: string;
+    deviceColor: IDeviceColor[];
+    storages: IDeviceStorage[];
 }
