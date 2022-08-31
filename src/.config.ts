@@ -4,12 +4,12 @@ export const CONTENT_API =
 export const themes = {
     dark: [
         { variable: "--background", value: "#202124" },
-        { variable: "--additionalBackground", value: "#111" },
+        { variable: "--additionalBackground", value: "#494949" },
         { variable: "--text", value: "white" },
     ],
     light: [
         { variable: "--background", value: "#fff" },
-        { variable: "--additionalBackground", value: "white" },
+        { variable: "--additionalBackground", value: "#eeeeee" },
         { variable: "--text", value: "black" },
     ],
 };
