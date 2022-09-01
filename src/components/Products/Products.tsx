@@ -34,12 +34,15 @@ const viewTypes = [
 ];
 
 const Products: FC = () => {
-    const [activeView, setActiveView] = useState(viewTypes[0].id);
+    const [activeView, setActiveView] = useState(
+        Number(localStorage.getItem("viewType")) || viewTypes[0].id
+    );
     const { t } = useTranslation();
 
     return (
         <div className={st.root}>
             <h1>{t("productsTitle")}</h1>
+
             <SwitchView
                 activeView={activeView}
                 setActiveView={setActiveView}

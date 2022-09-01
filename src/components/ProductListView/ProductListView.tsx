@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { IDeviceColor, IDeviceImage } from "../../types";
 import ItemColors from "../ItemColors/ItemColors";
 import ItemImageSlider from "../ItemImageSlider/ItemImageSlider";
@@ -18,12 +19,22 @@ const ProductListView: FC<ProductListViewProps> = ({
     price,
     slug,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <div className={st.root}>
             <div>
-                <ItemImageSlider images={images} slug={slug} />
+                <div>
+                    <ItemImageSlider images={images} slug={slug} />
+                </div>
+                <ItemColors colors={colors} />
             </div>
-            <ItemColors colors={colors} />
+            <div>
+                <h2>{deviceName}</h2>
+            </div>
+            <div>
+                <h4>{`${t("from")} ${price}₴`}</h4>
+            </div>
         </div>
     );
 };

@@ -15,13 +15,18 @@ const SwitchView: FC<SwitchViewProps> = ({
     setActiveView,
     activeView,
 }) => {
+    const onClickChange = (id: number) => {
+        localStorage.setItem("viewType", String(id));
+        setActiveView(id);
+    };
+
     return (
         <>
             <div className={st.root}>
                 {viewTypes.map((i) => (
                     <div
                         key={i.id}
-                        onClick={() => setActiveView(i.id)}
+                        onClick={() => onClickChange(i.id)}
                         className={i.id === activeView ? st.active : ""}
                     >
                         {i.item}
