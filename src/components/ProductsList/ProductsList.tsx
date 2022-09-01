@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../store/slices/productsSlice";
-import { IDeviceStorage } from "../../types";
+import { getMinPrice } from "../../utils/getMinPrice";
 import Product from "../ProductGridView/ProductGridView";
 import ProductListView from "../ProductListView/ProductListView";
 import st from "./ProductsList.module.scss";
@@ -13,15 +13,10 @@ interface ProductsListProps {
 const ProductsList: FC<ProductsListProps> = ({ viewType }) => {
     const { devices } = useSelector(selectProducts);
 
-    const minPrice = (arr: IDeviceStorage[]) =>
-        arr.reduce((prev, curr) => {
-            return prev.price < curr.price ? prev : curr;
-        });
-
     return (
         <section className={st.root}>
             {viewType === 1 ? (
-                <div className={st.listView}>
+                <div className={st.gridView}>
                     {devices &&
                         devices.map((device) => (
                             <Product
@@ -29,13 +24,13 @@ const ProductsList: FC<ProductsListProps> = ({ viewType }) => {
                                 deviceName={device.deviceName}
                                 images={device.images}
                                 colors={device.deviceColor}
-                                price={minPrice(device.storages).price}
+                                price={getMinPrice(device.storages)}
                                 slug={device.slug}
                             />
                         ))}
                 </div>
             ) : (
-                <div className={st.gridView}>
+                <div className={st.listView}>
                     {devices &&
                         devices.map((device) => (
                             <ProductListView
@@ -43,8 +38,12 @@ const ProductsList: FC<ProductsListProps> = ({ viewType }) => {
                                 deviceName={device.deviceName}
                                 images={device.images}
                                 colors={device.deviceColor}
-                                price={minPrice(device.storages).price}
+                                price={getMinPrice(device.storages)}
                                 slug={device.slug}
+                                display={device.displaySize}
+                                battery={device.battery}
+                                proc={device.processor}
+                                storages={device.storages}
                             />
                         ))}
                 </div>
