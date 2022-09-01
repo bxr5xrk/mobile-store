@@ -10,6 +10,12 @@
         align-items: center;
         justify-content: center;
 
+        &:hover {
+            svg {
+                fill: var(--primary);
+            }
+        }
+
         svg {
             width: 27px;
             height: 27px;

@@ -10,7 +10,7 @@ interface ProductGridViewProps {
     deviceName: string;
     images: IDeviceImage[];
     colors: IDeviceColor[];
-    price: number;
+    price: string;
     slug: string;
 }
 

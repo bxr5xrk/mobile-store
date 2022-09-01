@@ -3,14 +3,15 @@
     flex-direction: column;
     text-align: center;
 
-    .listView {
+    .gridView {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
 
-    .gridView {
+    .listView {
         display: flex;
         flex-direction: column;
+        gap: 50px;
     }
 }

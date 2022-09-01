@@ -9,7 +9,7 @@ export const themes = {
     ],
     light: [
         { variable: "--background", value: "#fff" },
-        { variable: "--additionalBackground", value: "#eeeeee" },
+        { variable: "--additionalBackground", value: "#f1f1f1" },
         { variable: "--text", value: "black" },
     ],
 };

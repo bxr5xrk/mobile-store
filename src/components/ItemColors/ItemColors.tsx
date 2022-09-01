@@ -17,6 +17,8 @@ const ItemColors: FC<ItemColorsProps> = ({ colors }) => {
                         border: `${
                             i.color === "white"
                                 ? "1px solid #111"
+                                : i.color === "black"
+                                ? "1px solid #fff"
                                 : "1px solid transparent"
                         } `,
                     }}

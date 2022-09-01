@@ -1,3 +1,96 @@
 .root {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 60px;
+    align-items: center;
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+    }
+
+    .stats {
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: flex-start;
+
+        h2 {
+            cursor: pointer;
+        }
+
+        span {
+            font-weight: 600;
+        }
+
+        .colors {
+            display: flex;
+            justify-content: left;
+        }
+        .storage {
+            display: flex;
+            gap: 20px;
+
+            div {
+                padding: 5px 10px;
+                border-radius: 20px;
+                background-color: var(--primary);
+                color: white;
+                font-weight: 600;
+            }
+        }
+    }
+
+    .price {
+        background-color: var(--additionalBackground);
+        border-radius: 20px;
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        svg {
+            cursor: pointer;
+            fill: var(--primary);
+            width: 25px;
+            height: 25px;
+
+            .heart {
+                fill: var(--primary);
+            }
+        }
+
+        div {
+            display: flex;
+            gap: 50px;
+        }
+
+        button {
+            border-radius: 10px;
+            border: 1px solid var(--primary);
+            display: flex;
+            gap: 20px;
+            padding: 10px 20px;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--background);
+            cursor: pointer;
+            transition: 0.3s;
+
+            p {
+                font-weight: 600;
+                color: var(--text);
+            }
+
+            svg {
+                transform: rotateY(180deg);
+            }
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        }
+    }
 }
