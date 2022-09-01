@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { IDeviceImage } from "../../types";
 import st from "./ItemImageSlider.module.scss";
@@ -36,6 +36,7 @@ const ItemImageSlider: FC<ItemImageSliderProps> = ({ images, slug }) => {
                     alt="img"
                     width={262}
                     height={228}
+                    loading="lazy"
                 />
             </Link>
 

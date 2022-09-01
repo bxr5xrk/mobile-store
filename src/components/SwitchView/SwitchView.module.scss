@@ -1,0 +1,26 @@
+.root {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 10px;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+            width: 27px;
+            height: 27px;
+            fill: var(--text);
+            transition: 0.3s linear;
+        }
+    }
+
+    .active {
+        svg {
+            fill: var(--primary);
+        }
+    }
+}

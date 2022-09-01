@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { IDeviceColor, IDeviceImage } from "../../types";
 import ItemColors from "../ItemColors/ItemColors";
 import ItemImageSlider from "../ItemImageSlider/ItemImageSlider";
-import st from "./Product.module.scss";
+import st from "./ProductGridView.module.scss";
 
-interface ProductProps {
+interface ProductGridViewProps {
     deviceName: string;
     images: IDeviceImage[];
     colors: IDeviceColor[];
@@ -14,7 +14,7 @@ interface ProductProps {
     slug: string;
 }
 
-const Product: FC<ProductProps> = ({
+const ProductGridView: FC<ProductGridViewProps> = ({
     deviceName,
     images,
     colors,
@@ -95,4 +95,4 @@ const Product: FC<ProductProps> = ({
     );
 };
 
-export default Product;
+export default ProductGridView;
