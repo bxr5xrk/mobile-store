@@ -2,6 +2,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import st from "./Sidebar.module.scss";
 
+const sortingData = [
+    { id: 1, sortBy: "Brand", items: ['від дешевих до дорогих', 'від дорогих до дешевих'] },
+    { id: 1, sortBy: "Brand", items: [] },
+];
+
 const Sidebar = () => {
     const { t } = useTranslation();
 

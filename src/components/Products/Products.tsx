@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
-import ListProducts from "../ProductsList/ProductsList";
+import ProductsList from "../ProductsList/ProductsList";
+import SortingTypes from "../SortingTypes/SortingTypes";
 import SwitchView from "../SwitchView/SwitchView";
 import st from "./Products.module.scss";
 
@@ -33,22 +34,38 @@ const viewTypes = [
     },
 ];
 
+const sortingTypes = [
+    { value: "popularity", title: "by popularity", id: 1 },
+    { value: "priceAsc", title: "lowest to highest price", id: 2 },
+    { value: "priceDesc", title: " highest to lowest price", id: 3 },
+    { value: "time", title: "by date of addition", id: 4 },
+];
+
 const Products: FC = () => {
+    const { t } = useTranslation();
+    const [sortingValue, setSortingValue] = useState(sortingTypes[0].value);
     const [activeView, setActiveView] = useState(
         Number(localStorage.getItem("viewType")) || viewTypes[0].id
     );
-    const { t } = useTranslation();
 
     return (
         <div className={st.root}>
             <h1>{t("productsTitle")}</h1>
 
-            <SwitchView
-                activeView={activeView}
-                setActiveView={setActiveView}
-                viewTypes={viewTypes}
-            />
-            <ListProducts viewType={activeView} />
+            <div className={st.sort}>
+                <SortingTypes
+                    sortingTypes={sortingTypes}
+                    sortingValue={sortingValue}
+                    setSortingValue={setSortingValue}
+                />
+                <SwitchView
+                    activeView={activeView}
+                    setActiveView={setActiveView}
+                    viewTypes={viewTypes}
+                />
+            </div>
+
+            <ProductsList viewType={activeView} sortingType={sortingValue} />
         </div>
     );
 };

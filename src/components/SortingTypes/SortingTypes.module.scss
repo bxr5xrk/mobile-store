@@ -1,0 +1,40 @@
+.selectSort {
+    display: flex;
+    align-items: center;
+    transition: all 0.5s;
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 17px;
+
+    p {
+        margin-right: 7px;
+    }
+
+    svg {
+        display: none;
+    }
+
+    select {
+        color: var(--primary);
+        transition: 0.3s;
+    }
+
+    option {
+        text-align: left;
+        color: var(--text);
+        background-color: var(--background);
+    }
+
+    &:hover {
+        select {
+            text-decoration: underline;
+        }
+    }
+
+    svg {
+        transition: all 0.5s;
+        margin-right: 5px;
+        fill: var(--text);
+    }
+}
