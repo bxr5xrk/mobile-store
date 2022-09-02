@@ -1,23 +1,14 @@
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { sortingTypes } from "../../.config";
+import { selectFilter, setSortingType } from "../../store/slices/filterSlice";
+import { useAppDispatch } from "../../store/store";
 import st from "./SortingTypes.module.scss";
 
-interface ISortType {
-    id: number;
-    value: string;
-    title: string;
-}
+const SortingTypes: FC = () => {
+    const { sortingType } = useSelector(selectFilter);
+    const dispatch = useAppDispatch();
 
-interface SortingTypesProps {
-    sortingTypes: ISortType[];
-    sortingValue: string;
-    setSortingValue: (val: string) => void;
-}
-
-const SortingTypes: FC<SortingTypesProps> = ({
-    sortingTypes,
-    sortingValue,
-    setSortingValue,
-}) => {
     return (
         <div className={st.selectSort}>
             <svg
@@ -32,8 +23,8 @@ const SortingTypes: FC<SortingTypesProps> = ({
             </svg>
             <p>Show: </p>
             <select
-                value={sortingValue}
-                onChange={(e) => setSortingValue(e.target.value)}
+                value={sortingType}
+                onChange={(e) => dispatch(setSortingType(e.target.value))}
             >
                 {sortingTypes.map((i) => (
                     <option key={i.id} value={i.value}>

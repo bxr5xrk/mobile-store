@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import { selectFilter } from "../../store/slices/filterSlice";
 import { selectProducts } from "../../store/slices/productsSlice";
 import { getMinPrice } from "../../utils/getMinPrice";
 import { sortedItems } from "../../utils/sortedItems";
@@ -9,11 +10,11 @@ import st from "./ProductsList.module.scss";
 
 interface ProductsListProps {
     viewType: number;
-    sortingType: string;
 }
 
-const ProductsList: FC<ProductsListProps> = ({ viewType, sortingType }) => {
+const ProductsList: FC<ProductsListProps> = ({ viewType }) => {
     const { devices } = useSelector(selectProducts);
+    const {sortingType} = useSelector(selectFilter)
 
     return (
         <section className={st.root}>

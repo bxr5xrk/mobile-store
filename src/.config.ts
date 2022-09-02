@@ -13,3 +13,10 @@ export const themes = {
         { variable: "--text", value: "black" },
     ],
 };
+
+export const sortingTypes = [
+    { value: "popularity", title: "by popularity", id: 1 },
+    { value: "priceAsc", title: "lowest to highest price", id: 2 },
+    { value: "priceDesc", title: " highest to lowest price", id: 3 },
+    { value: "time", title: "by date of addition", id: 4 },
+];

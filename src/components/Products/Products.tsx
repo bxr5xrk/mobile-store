@@ -34,16 +34,8 @@ const viewTypes = [
     },
 ];
 
-const sortingTypes = [
-    { value: "popularity", title: "by popularity", id: 1 },
-    { value: "priceAsc", title: "lowest to highest price", id: 2 },
-    { value: "priceDesc", title: " highest to lowest price", id: 3 },
-    { value: "time", title: "by date of addition", id: 4 },
-];
-
 const Products: FC = () => {
     const { t } = useTranslation();
-    const [sortingValue, setSortingValue] = useState(sortingTypes[0].value);
     const [activeView, setActiveView] = useState(
         Number(localStorage.getItem("viewType")) || viewTypes[0].id
     );
@@ -53,11 +45,7 @@ const Products: FC = () => {
             <h1>{t("productsTitle")}</h1>
 
             <div className={st.sort}>
-                <SortingTypes
-                    sortingTypes={sortingTypes}
-                    sortingValue={sortingValue}
-                    setSortingValue={setSortingValue}
-                />
+                <SortingTypes />
                 <SwitchView
                     activeView={activeView}
                     setActiveView={setActiveView}
@@ -65,7 +53,7 @@ const Products: FC = () => {
                 />
             </div>
 
-            <ProductsList viewType={activeView} sortingType={sortingValue} />
+            <ProductsList viewType={activeView} />
         </div>
     );
 };
