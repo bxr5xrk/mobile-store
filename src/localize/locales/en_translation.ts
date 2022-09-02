@@ -6,6 +6,7 @@ export const en = {
         cart: "Cart",
         theme: "Theme",
         productsTitle: "All models",
-        from: 'From',
+        from: "From",
+        sidebarTitle: "Filter panel",
     },
 };
