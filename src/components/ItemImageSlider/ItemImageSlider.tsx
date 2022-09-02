@@ -15,6 +15,7 @@ const ItemImageSlider: FC<ItemImageSliderProps> = ({ images, slug }) => {
     return (
         <div className={st.root}>
             <span
+                className={`${st.switch} ${st.switch__left}`}
                 onClick={() => setCurrent(current === 0 ? length : current - 1)}
             >
                 <svg
@@ -34,13 +35,14 @@ const ItemImageSlider: FC<ItemImageSliderProps> = ({ images, slug }) => {
                 <img
                     src={images[current].imageHref}
                     alt="img"
-                    width={262}
-                    height={228}
+                    width={242}
+                    height={208}
                     loading="lazy"
                 />
             </Link>
 
             <span
+                className={`${st.switch} ${st.switch__right}`}
                 onClick={() => setCurrent(current === length ? 0 : current + 1)}
             >
                 <svg

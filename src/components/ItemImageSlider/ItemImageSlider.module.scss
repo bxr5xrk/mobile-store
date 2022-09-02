@@ -1,29 +1,53 @@
 .root {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: relative;
+    margin: 0 auto;
 
     img {
         transition: 0.7s;
         padding: 15px;
+        width: 242px;
+        height: 208px;
 
         &::selection {
             background-color: transparent;
         }
     }
 
-    span {
+    .switch {
+        position: absolute;
         z-index: 1;
         display: flex;
         justify-content: center;
         align-items: center;
         padding: 10px;
         cursor: pointer;
+        opacity: 0;
+        transition: 0.4s linear;
 
         svg {
             width: 18px;
             height: 18px;
             fill: grey;
+        }
+
+        &__left {
+            top: 0;
+            left: -10px;
+            height: 100%;
+            margin: 0 auto;
+        }
+
+        &__right {
+            top: 0;
+            right: -10px;
+            height: 100%;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 1070px) {
+        .switch {
+            opacity: 1;
         }
     }
 }

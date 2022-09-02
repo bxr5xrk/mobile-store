@@ -26,9 +26,8 @@ const ProductGridView: FC<ProductGridViewProps> = ({
 
     return (
         <div className={st.root}>
-            <div>
-                <ItemImageSlider images={images} slug={slug} />
-            </div>
+            <ItemImageSlider images={images} slug={slug} />
+
             <ItemColors colors={colors} />
 
             <div className={st.stats}>
