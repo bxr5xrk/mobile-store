@@ -1,13 +1,22 @@
 import { getMinPrice } from "./getMinPrice";
-import { IDevice } from "./../types/index";
+import { IDevice } from "../types/index";
 
 interface sortedItemsProps {
     devices: IDevice[];
     sortingType: string;
+    price: { min: number; max: number };
 }
 
-export const sortedItems = ({ devices, sortingType }: sortedItemsProps) => {
-    const sortedArr = [...devices];
+export const sortItems = ({
+    devices,
+    sortingType,
+    price,
+}: sortedItemsProps) => {
+    const sortedArr = [...devices].filter(
+        (i) =>
+            getMinPrice(i.storages, "num") >= price.min &&
+            getMinPrice(i.storages, "num") <= price.max
+    );
 
     if (sortingType === "popularity") {
         return sortedArr.sort((a, b) =>
