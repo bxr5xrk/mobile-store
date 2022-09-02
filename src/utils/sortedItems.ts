@@ -13,13 +13,13 @@ export const sortedItems = ({ devices, sortingType }: sortedItemsProps) => {
         return sortedArr.sort((a, b) =>
             a.deviceName.localeCompare(b.deviceName)
         );
-    } else if (sortingType === "priceAsc") {
+    } else if (sortingType === "priceDesc") {
         return sortedArr.sort(
             (a, b) =>
                 Number(getMinPrice(b.storages, "num")) -
                 Number(getMinPrice(a.storages, "num"))
         );
-    } else if (sortingType === "priceDesc") {
+    } else if (sortingType === "priceAsc") {
         return sortedArr.sort(
             (a, b) =>
                 Number(getMinPrice(a.storages, "num")) -

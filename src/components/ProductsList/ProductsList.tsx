@@ -14,7 +14,6 @@ interface ProductsListProps {
 
 const ProductsList: FC<ProductsListProps> = ({ viewType, sortingType }) => {
     const { devices } = useSelector(selectProducts);
-    console.log(devices?.map((i) => i.addingDate + i.deviceName));
 
     return (
         <section className={st.root}>
