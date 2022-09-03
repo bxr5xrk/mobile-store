@@ -1,42 +1,29 @@
-import { getMinPrice } from "./getMinPrice";
 import { IDevice } from "../types/index";
 
 interface sortedItemsProps {
     devices: IDevice[];
     sortingType: string;
-    price: { min: number; max: number };
+    priceValues: { min: number; max: number };
 }
 
 export const sortItems = ({
     devices,
     sortingType,
-    price,
+    priceValues,
 }: sortedItemsProps) => {
     const sortedArr = [...devices].filter(
-        (i) =>
-            getMinPrice(i.storages, "num") >= price.min &&
-            getMinPrice(i.storages, "num") <= price.max
+        (i) => i.price >= priceValues.min && i.price <= priceValues.max
     );
 
     if (sortingType === "popularity") {
-        return sortedArr.sort((a, b) =>
-            a.deviceName.localeCompare(b.deviceName)
-        );
+        return sortedArr.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortingType === "priceDesc") {
-        return sortedArr.sort(
-            (a, b) =>
-                Number(getMinPrice(b.storages, "num")) -
-                Number(getMinPrice(a.storages, "num"))
-        );
+        return sortedArr.sort((a, b) => b.price - a.price);
     } else if (sortingType === "priceAsc") {
-        return sortedArr.sort(
-            (a, b) =>
-                Number(getMinPrice(a.storages, "num")) -
-                Number(getMinPrice(b.storages, "num"))
-        );
+        return sortedArr.sort((a, b) => a.price - b.price);
     } else if (sortingType === "time") {
         return sortedArr.sort((a, b) =>
-            b.addingDate.localeCompare(a.addingDate)
+            b.additionDate.localeCompare(a.additionDate)
         );
     } else {
         return sortedArr;

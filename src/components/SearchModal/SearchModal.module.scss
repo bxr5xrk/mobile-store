@@ -1,5 +1,5 @@
 .wrapper {
-    z-index: 3;
+    z-index: 6;
     width: 100vw;
     height: 100vh;
     top: 0;
@@ -21,7 +21,7 @@
 }
 
 .searchModal {
-    z-index: 4;
+    z-index: 7;
     position: absolute;
     transition: 0.3s;
     background-color: var(--background);

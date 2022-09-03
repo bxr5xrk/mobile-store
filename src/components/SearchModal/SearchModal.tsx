@@ -28,7 +28,7 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
             ? devices &&
               devices.filter(
                   (i) =>
-                      i.deviceName
+                      i.title
                           .toLowerCase()
                           .includes(value.toLowerCase()) ||
                       i.brand.toLowerCase().includes(value.toLowerCase())
@@ -83,7 +83,7 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                                     onKeyDown={(e) => handleKey(e, i.slug)}
                                 >
                                     <p>
-                                        {i.brand} {i.deviceName}
+                                        {i.brand} {i.fullTitle}
                                     </p>
                                 </div>
                             ))

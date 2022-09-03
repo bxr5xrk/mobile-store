@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import {
+    IFilterTypes,
+    IValues,
     selectFilter,
     setFilters,
     setPrice,
@@ -12,6 +14,33 @@ import { getPrice } from "../../utils/getMinPrice";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import st from "./Sidebar.module.scss";
 
+// ! prettify (works)
+const changeObj = (
+    filterTypes: IFilterTypes,
+    type: string,
+    value: string,
+    changed: boolean
+) => {
+    if (filterTypes.brands.values && type === "brands") {
+        const newObj: IValues[] = [];
+        filterTypes.brands.values.map((i) =>
+            newObj.push({
+                title: i.title,
+                isActive: i.title === value ? changed : i.isActive,
+            })
+        );
+        return {
+            ...filterTypes,
+            brands: {
+                ...filterTypes.brands,
+                values: [...newObj],
+            },
+        };
+    } else {
+        return filterTypes;
+    }
+};
+
 const Sidebar = () => {
     const { t, i18n } = useTranslation();
     const [minVal, setMinVal] = useState(0);
@@ -21,6 +50,7 @@ const Sidebar = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        // ! rewrite this shit
         if (devices) {
             const createValues = (value: "brand" | "proc") => {
                 const unique =
@@ -72,12 +102,16 @@ const Sidebar = () => {
                     className={st.filterTypes}
                     onSubmit={(e) => onClickSubmit(e)}
                 >
-                    <MultiRangeSlider
-                        min={getPrice(devices, "min")}
-                        max={getPrice(devices, "max")}
-                        setMinVal={setMinVal}
-                        setMaxVal={setMaxVal}
-                    />
+                    {devices.length > 1 && (
+                        <MultiRangeSlider
+                            min={getPrice(devices, "min") - 100}
+                            max={getPrice(devices, "max") + 100}
+                            setMinVal={setMinVal}
+                            setMaxVal={setMaxVal}
+                        />
+                    )}
+
+                    {/* // ! create component from this */}
                     <div>
                         <h4>
                             {i18n.language === "en"
@@ -86,7 +120,22 @@ const Sidebar = () => {
                         </h4>
                         {filterTypes.brands.values &&
                             filterTypes.brands.values.map((i) => (
-                                <div key={i.title}>
+                                <div
+                                    key={i.title}
+                                    onClick={() =>
+                                        filterTypes.brands.values &&
+                                        dispatch(
+                                            setFilters(
+                                                changeObj(
+                                                    filterTypes,
+                                                    "brands",
+                                                    i.title,
+                                                    !i.isActive
+                                                )
+                                            )
+                                        )
+                                    }
+                                >
                                     <span>
                                         {i.isActive === false ? "-" : "+"}
                                     </span>
