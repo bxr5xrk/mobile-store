@@ -15,6 +15,8 @@ export interface IDeviceColor {
     additionalPrice: number;
 }
 
+export type IBrand = string 
+
 export interface IDevice {
     id: number;
     deviceName: string;
@@ -22,7 +24,7 @@ export interface IDevice {
     images: IDeviceImage[];
     slug: string;
     battery: string;
-    brand: string;
+    brand: IBrand;
     displaySize: number;
     processor: string;
     deviceColor: IDeviceColor[];
