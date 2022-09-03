@@ -13,11 +13,11 @@ const ItemColors: FC<ItemColorsProps> = ({ colors }) => {
                 <span
                     key={i.id}
                     style={{
-                        backgroundColor: i.color,
+                        backgroundColor: i.color.hex,
                         border: `${
-                            i.color === "white"
+                            i.color.hex === "white"
                                 ? "1px solid #111"
-                                : i.color === "black" && "1px solid #fff"
+                                : i.color.hex === "#000000" && "1px solid #fff"
                         } `,
                     }}
                 ></span>

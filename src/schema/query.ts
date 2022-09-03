@@ -3,27 +3,27 @@ import { gql } from "graphql-request";
 export const QUERY = gql`
     query fetchDevices {
         devices {
+            id
+            title
+            fullTitle
             slug
-            deviceName
-            deviceColor {
-                color
+            additionDate
+            battery
+            brand
+            deviceColors {
                 id
+                color {
+                    hex
+                }
                 additionalPrice
             }
-            storages {
-                romRam
-                id
-                price
-            }
-            brand
-            battery
             displaySize
+            price
             processor
-            id
-            addingDate
+            storage
             images {
-                imageHref
                 id
+                imageHref
             }
         }
     }
@@ -32,27 +32,27 @@ export const QUERY = gql`
 export const QUERY_SINGLE = gql`
     query fetchDevice($slug: String!) {
         device(where: { slug: $slug }) {
+            id
+            title
+            fullTitle
             slug
-            deviceName
-            deviceColor {
-                color
+            additionDate
+            battery
+            brand
+            deviceColors {
                 id
+                color {
+                    hex
+                }
                 additionalPrice
             }
-            storages {
-                romRam
-                id
-                price
-            }
-            brand
-            battery
             displaySize
+            price
             processor
-            id
-            addingDate
+            storage
             images {
-                imageHref
                 id
+                imageHref
             }
         }
     }

@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { IDeviceColor, IDeviceImage, IDeviceStorage } from "../../types";
+import { IDeviceColor, IDeviceImage } from "../../types";
 import ItemColors from "../ItemColors/ItemColors";
 import ItemImageSlider from "../ItemImageSlider/ItemImageSlider";
 import st from "./ProductListView.module.scss";
 
 interface ProductListViewProps {
-    deviceName: string;
+    title: string;
     images: IDeviceImage[];
     colors: IDeviceColor[];
     price: string;
@@ -15,11 +15,11 @@ interface ProductListViewProps {
     display: number;
     battery: string;
     proc: string;
-    storages: IDeviceStorage[];
+    storage: string;
 }
 
 const ProductListView: FC<ProductListViewProps> = ({
-    deviceName,
+    title,
     images,
     colors,
     price,
@@ -27,7 +27,7 @@ const ProductListView: FC<ProductListViewProps> = ({
     display,
     battery,
     proc,
-    storages,
+    storage,
 }) => {
     const { t } = useTranslation();
     const [show, setShow] = useState(false);
@@ -38,11 +38,9 @@ const ProductListView: FC<ProductListViewProps> = ({
             <ItemImageSlider images={images} slug={slug} />
 
             <div className={st.stats}>
-                <h2 onClick={() => navigate(`./${slug}`)}>{deviceName}</h2>
+                <h2 onClick={() => navigate(`./${slug}`)}>{title}</h2>
                 <div className={st.storage}>
-                    {storages.map((i) => (
-                        <div key={i.id}>{i.romRam}</div>
-                    ))}
+                    <div>{storage.replace("-", "/")}</div>
                 </div>
                 <div className={st.colors}>
                     <ItemColors colors={colors} />

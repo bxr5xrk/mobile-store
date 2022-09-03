@@ -1,7 +1,7 @@
+import { CONTENT_API } from "./../.data";
 import { IDevice } from "./../types/index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import request from "graphql-request";
-import { CONTENT_API } from "../.config";
 import { QUERY, QUERY_SINGLE } from "../schema/query";
 
 export class Service {

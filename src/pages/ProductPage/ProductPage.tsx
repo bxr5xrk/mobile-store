@@ -31,7 +31,7 @@ const ProductPage: FC = () => {
 
     return (
         <main>
-            {product === null ? <p>loading</p> : <p>{product.deviceName}</p>}
+            {product === null ? <p>loading</p> : <p>{product.fullTitle}</p>}
             <button onClick={() => navigate("/products")}>back</button>
         </main>
     );

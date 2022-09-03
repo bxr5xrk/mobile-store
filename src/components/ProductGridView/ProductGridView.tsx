@@ -7,7 +7,7 @@ import ItemImageSlider from "../ItemImageSlider/ItemImageSlider";
 import st from "./ProductGridView.module.scss";
 
 interface ProductGridViewProps {
-    deviceName: string;
+    fullTitle: string;
     images: IDeviceImage[];
     colors: IDeviceColor[];
     price: string;
@@ -15,7 +15,7 @@ interface ProductGridViewProps {
 }
 
 const ProductGridView: FC<ProductGridViewProps> = ({
-    deviceName,
+    fullTitle,
     images,
     colors,
     price,
@@ -31,7 +31,7 @@ const ProductGridView: FC<ProductGridViewProps> = ({
             <ItemColors colors={colors} />
 
             <div className={st.stats}>
-                <h2 onClick={() => navigate(`./${slug}`)}>{deviceName}</h2>
+                <h2 onClick={() => navigate(`./${slug}`)}>{fullTitle}</h2>
 
                 <div className={st.root__bottom}>
                     <h4>{`${t("from")} ${price}₴`}</h4>
