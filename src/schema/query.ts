@@ -57,3 +57,39 @@ export const QUERY_SINGLE = gql`
         }
     }
 `;
+
+export const QUERY_ALL_DATA = gql`
+    query fetchData {
+        devices {
+            id
+            title
+            fullTitle
+            slug
+            additionDate
+            battery
+            brand
+            deviceColors {
+                id
+                color {
+                    hex
+                }
+                additionalPrice
+            }
+            displaySize
+            price
+            processor
+            storage
+            images {
+                id
+                imageHref
+            }
+        }
+        filterTypes {
+            id
+            title
+            filterValues {
+                value
+            }
+        }
+    }
+`;

@@ -34,3 +34,18 @@ export interface IDevice {
     deviceColors: IDeviceColor[];
     storage: string;
 }
+
+export interface IValue {
+    value: string;
+}
+
+export interface IFilter {
+    id: number;
+    title: string;
+    filterValues: IValue[];
+}
+
+export interface IAllData {
+    devices: IDevice[];
+    filterTypes: IFilter[];
+}

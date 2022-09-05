@@ -4,12 +4,14 @@ interface sortedItemsProps {
     devices: IDevice[];
     sortingType: string;
     priceValues: { min: number; max: number };
+    // filterTypes: IFilterTypes;
 }
 
 export const sortItems = ({
     devices,
     sortingType,
     priceValues,
+    // filterTypes,
 }: sortedItemsProps) => {
     const sortedArr = [...devices].filter(
         (i) => i.price >= priceValues.min && i.price <= priceValues.max

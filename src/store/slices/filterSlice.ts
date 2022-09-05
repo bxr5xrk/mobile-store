@@ -7,42 +7,23 @@ interface IPrice {
     max: number;
 }
 
-export interface IValues {
-    title: string;
-    isActive: boolean;
-}
-
 interface IFilterType {
-    id: number;
-    title: { en: string; uk: string };
-    values: IValues[] | null;
-}
-
-export interface IFilterTypes {
-    brands: IFilterType;
-    processor: IFilterType;
+    brands: string[];
+    processors: string[];
 }
 
 interface IFilter {
     sortingType: string;
     priceValues: IPrice;
-    filterTypes: IFilterTypes;
+    filterTypes: IFilterType;
 }
 
 const initialState: IFilter = {
     sortingType: sortingTypes[0].value,
     priceValues: { min: 0, max: 100_000 },
     filterTypes: {
-        brands: {
-            id: 1,
-            title: { en: "Brands", uk: "Виробники" },
-            values: null,
-        },
-        processor: {
-            id: 2,
-            title: { en: "Processor", uk: "Процесор" },
-            values: null,
-        },
+        brands: [],
+        processors: [],
     },
 };
 
@@ -56,7 +37,7 @@ const filterSlice = createSlice({
         setPrice(state, action: PayloadAction<IPrice>) {
             state.priceValues = action.payload;
         },
-        setFilters(state, action: PayloadAction<IFilterTypes>) {
+        setFilters(state, action: PayloadAction<IFilterType>) {
             state.filterTypes = action.payload;
         },
     },
