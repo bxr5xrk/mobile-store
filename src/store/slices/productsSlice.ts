@@ -6,13 +6,13 @@ import { RootState } from "../store";
 
 interface IData {
     devices: null | IDevice[];
-    filterTypes: null | IFilter[];
+    filters: null | IFilter[];
     status: "loading" | "success" | "rejected";
 }
 
 const initialState: IData = {
     devices: null,
-    filterTypes: null,
+    filters: null,
     status: "loading",
 };
 
@@ -28,20 +28,20 @@ const productsSlice = createSlice({
         builder.addCase(Service.fetchProducts.pending, (state) => {
             state.status = "loading";
             state.devices = [];
-            state.filterTypes = [];
+            state.filters = [];
         });
         builder.addCase(
             Service.fetchProducts.fulfilled,
             (state, action: PayloadAction<IAllData>) => {
                 state.status = "success";
                 state.devices = action.payload.devices;
-                state.filterTypes = action.payload.filterTypes;
+                state.filters = action.payload.filterTypes;
             }
         );
         builder.addCase(Service.fetchProducts.rejected, (state) => {
             state.status = "rejected";
             state.devices = [];
-            state.filterTypes = [];
+            state.filters = [];
         });
     },
 });

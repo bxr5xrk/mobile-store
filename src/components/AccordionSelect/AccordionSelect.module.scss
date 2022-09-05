@@ -5,16 +5,22 @@
 
     .top {
         display: flex;
+        align-items: center;
         cursor: pointer;
+        svg {
+            transition: 0.3s;
+        }
     }
 
     .dropdown {
         margin: 0 15px;
         display: none;
-        transition: 0.5s;
+        transition: 0.3s;
 
         .item {
             display: flex;
+            cursor: pointer;
+
             p {
                 margin-left: 10px;
             }

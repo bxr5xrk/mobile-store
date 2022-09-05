@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import {
-    setPrice,
-} from "../../store/slices/filterSlice";
+import { IFilterType, setActiveFilters, setPrice } from "../../store/slices/filterSlice";
 import { selectProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../store/store";
-// import { setFilterData } from "../../utils/changeFilterData";
 import { getPrice } from "../../utils/getMinPrice";
 import AccordionSelect from "../AccordionSelect/AccordionSelect";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
@@ -14,32 +11,24 @@ import st from "./Sidebar.module.scss";
 
 const Sidebar = () => {
     const { t } = useTranslation();
+    const dispatch = useAppDispatch();
     const [minVal, setMinVal] = useState(0);
     const [maxVal, setMaxVal] = useState(0);
-    const { devices, filterTypes } = useSelector(selectProducts);
-    // const { filterTypes } = useSelector(selectFilter);
-    const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        if (devices) {
-            // dispatch(setFilters(setFilterData(devices, filterTypes)));
-            console.log(devices);
-        }
-        if (filterTypes && filterTypes[0]) {
-            console.log([...filterTypes[0].filterValues.map((i) => i.value)]);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [devices]);
+    const { devices, filters } = useSelector(selectProducts);
+    const [filterTypes, setFilterTypes] = useState<IFilterType>({
+        brands: [],
+        processors: [],
+    });
 
     const onClickSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(setPrice({ min: minVal, max: maxVal }));
+        dispatch(setActiveFilters(filterTypes))
     };
 
-    if (!devices || !filterTypes) {
+    if (!devices || !filters) {
         return <>error</>;
     }
-    // console.log([...filterTypes[0].filterValues.map(i => i.value)]);
 
     return (
         <aside className={st.root}>
@@ -57,11 +46,13 @@ const Sidebar = () => {
                         setMaxVal={setMaxVal}
                     />
 
-                    {filterTypes.map((i) => (
+                    {filters.map((i) => (
                         <AccordionSelect
                             key={i.id}
                             title={i.title}
                             items={[...i.filterValues.map((i) => i.value)]}
+                            setFilterTypes={setFilterTypes}
+                            filterTypes={filterTypes}
                         />
                     ))}
 

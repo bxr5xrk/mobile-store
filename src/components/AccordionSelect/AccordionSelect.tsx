@@ -1,20 +1,25 @@
 import { FC, useState } from "react";
-// import { useSelector } from "react-redux";
-// import { selectFilter } from "../../store/slices/filterSlice";
-// import { useAppDispatch } from "../../store/store";
-// import { IValue } from "../../types";
-// import { changeFilterValue } from "../../utils/changeFilterData";
+import { IFilterType } from "../../store/slices/filterSlice";
+import { changeFilterValue } from "../../utils/changeFilterValue";
 import st from "./AccordionSelect.module.scss";
 
 interface AccordionSelectProps {
     title: string;
     items: string[];
+    setFilterTypes: (i: IFilterType) => void;
+    filterTypes: IFilterType;
 }
 
-const AccordionSelect: FC<AccordionSelectProps> = ({ title, items }) => {
-    // const dispatch = useAppDispatch();
-    // const { filterTypes } = useSelector(selectFilter);
+const AccordionSelect: FC<AccordionSelectProps> = ({
+    title,
+    items,
+    setFilterTypes,
+    filterTypes,
+}) => {
     const [showDropdown, setShowDropdown] = useState(false);
+
+    const currentFilter =
+        title === "Brands" ? filterTypes.brands : filterTypes.processors;
 
     return (
         <div className={st.root}>
@@ -27,6 +32,7 @@ const AccordionSelect: FC<AccordionSelectProps> = ({ title, items }) => {
                     height="24px"
                     viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg"
+                    transform={`${showDropdown ? "rotate(90)" : ""}`}
                 >
                     <path d="M9.343 18.657a1 1 0 0 1-.707-1.707l4.95-4.95-4.95-4.95a1 1 0 0 1 1.414-1.414l5.657 5.657a1 1 0 0 1 0 1.414l-5.657 5.657a1 1 0 0 1-.707.293z" />
                 </svg>
@@ -38,21 +44,17 @@ const AccordionSelect: FC<AccordionSelectProps> = ({ title, items }) => {
                     <div
                         className={st.item}
                         key={i}
-                        // onClick={() =>
-                        //     items &&
-                        //     dispatch(
-                        //         setFilters(
-                        //             changeFilterValue(
-                        //                 filterTypes,
-                        //                 "brands",
-                        //                 i.title,
-                        //                 !i.isActive
-                        //             )
-                        //         )
-                        //     )
-                        // }
+                        onClick={() =>
+                            setFilterTypes(
+                                changeFilterValue(filterTypes, title, i)
+                            )
+                        }
                     >
-                        {/* <span>{i.isActive === false ? "-" : "+"}</span> */}
+                        <span>
+                            {currentFilter.find((item) => item === i)
+                                ? "+"
+                                : "-"}
+                        </span>
                         <p>{i}</p>
                     </div>
                 ))}

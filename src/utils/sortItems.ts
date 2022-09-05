@@ -4,18 +4,25 @@ interface sortedItemsProps {
     devices: IDevice[];
     sortingType: string;
     priceValues: { min: number; max: number };
-    // filterTypes: IFilterTypes;
+    brands: string[];
 }
 
 export const sortItems = ({
     devices,
     sortingType,
     priceValues,
-    // filterTypes,
+    brands,
 }: sortedItemsProps) => {
-    const sortedArr = [...devices].filter(
-        (i) => i.price >= priceValues.min && i.price <= priceValues.max
-    );
+    const sortedArr = brands.length
+        ? [...devices].filter(
+              (i) =>
+                  i.price >= priceValues.min &&
+                  i.price <= priceValues.max &&
+                  brands.includes(i.brand)
+          )
+        : [...devices].filter(
+              (i) => i.price >= priceValues.min && i.price <= priceValues.max
+          );
 
     if (sortingType === "popularity") {
         return sortedArr.sort((a, b) => a.title.localeCompare(b.title));

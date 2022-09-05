@@ -13,14 +13,20 @@ interface ProductsListProps {
 
 const ProductsList: FC<ProductsListProps> = ({ viewType }) => {
     const { devices } = useSelector(selectProducts);
-    const { sortingType, priceValues } = useSelector(selectFilter);
+    const { sortingType, priceValues, activeFilters } =
+        useSelector(selectFilter);
 
     return (
         <section className={st.root}>
             {viewType === 1 ? (
                 <div className={st.gridView}>
                     {devices &&
-                        sortItems({ devices, sortingType, priceValues }).map((device) => (
+                        sortItems({
+                            devices,
+                            sortingType,
+                            priceValues,
+                            brands: activeFilters.brands,
+                        }).map((device) => (
                             <Product
                                 key={device.id}
                                 fullTitle={device.fullTitle}
