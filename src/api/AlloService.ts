@@ -8,8 +8,15 @@ import { QUERY_SINGLE } from "../schema/query";
 export class Service {
     static fetchProducts = createAsyncThunk(
         "products/fetchProducts",
-        async () => {
-            const data = await request<IAllData>(CONTENT_API, QUERY_ALL_DATA);
+        async ({ locale }: { locale: string }) => {
+            const variables = {
+                locale: [locale],
+            };
+            const data = await request<IAllData>(
+                CONTENT_API,
+                QUERY_ALL_DATA,
+                variables
+            );
             return data;
         }
     );

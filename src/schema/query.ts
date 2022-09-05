@@ -59,7 +59,7 @@ export const QUERY_SINGLE = gql`
 `;
 
 export const QUERY_ALL_DATA = gql`
-    query fetchData {
+    query fetchData($locale: [Locale!]!) {
         devices {
             id
             title
@@ -84,7 +84,8 @@ export const QUERY_ALL_DATA = gql`
                 imageHref
             }
         }
-        filterTypes {
+
+        filterTypes(locales: $locale) {
             id
             title
             filterValues {

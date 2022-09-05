@@ -1,4 +1,5 @@
 import React, { FC, KeyboardEvent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Service } from "../../api/AlloService";
@@ -17,9 +18,11 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
     const { devices } = useSelector(selectProducts);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const { i18n } = useTranslation();
 
     useEffect(() => {
-        devices === null && dispatch(Service.fetchProducts());
+        devices === null &&
+            dispatch(Service.fetchProducts({ locale: i18n.language }));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -28,9 +31,7 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
             ? devices &&
               devices.filter(
                   (i) =>
-                      i.title
-                          .toLowerCase()
-                          .includes(value.toLowerCase()) ||
+                      i.title.toLowerCase().includes(value.toLowerCase()) ||
                       i.brand.toLowerCase().includes(value.toLowerCase())
               )
             : null;
