@@ -1,15 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { sortingTypes } from "../../.config";
+import { IFilterType } from "../../types";
 import { RootState } from "../store";
 
 interface IPrice {
     min: number;
     max: number;
-}
-
-export interface IFilterType {
-    brands: string[];
-    processors: string[];
 }
 
 interface IFilter {
@@ -23,7 +19,8 @@ const initialState: IFilter = {
     priceValues: { min: 0, max: 100_000 },
     activeFilters: {
         brands: [],
-        processors: [],
+        rom: [],
+        ram: [],
     },
 };
 
@@ -43,7 +40,8 @@ const filterSlice = createSlice({
     },
 });
 
-export const { setSortingType, setPrice, setActiveFilters } = filterSlice.actions;
+export const { setSortingType, setPrice, setActiveFilters } =
+    filterSlice.actions;
 
 export const selectFilter = (state: RootState) => state.filter;
 

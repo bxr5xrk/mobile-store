@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { IFilterType } from "../../store/slices/filterSlice";
+import { IFilterType } from "../../types";
 import { changeFilterValue } from "../../utils/changeFilterValue";
 import st from "./AccordionSelect.module.scss";
 
@@ -8,6 +8,7 @@ interface AccordionSelectProps {
     items: string[];
     setFilterTypes: (i: IFilterType) => void;
     filterTypes: IFilterType;
+    id: string;
 }
 
 const AccordionSelect: FC<AccordionSelectProps> = ({
@@ -15,11 +16,16 @@ const AccordionSelect: FC<AccordionSelectProps> = ({
     items,
     setFilterTypes,
     filterTypes,
+    id,
 }) => {
     const [showDropdown, setShowDropdown] = useState(false);
 
     const currentFilter =
-        title === "Brands" ? filterTypes.brands : filterTypes.processors;
+        id === "cl7onewcbakui0duq4nwe25wo"
+            ? filterTypes.brands
+            : id === "cl7owgcuunfk40atecqpji7au"
+            ? filterTypes.ram
+            : filterTypes.rom;
 
     return (
         <div className={st.root}>
@@ -46,7 +52,7 @@ const AccordionSelect: FC<AccordionSelectProps> = ({
                         key={i}
                         onClick={() =>
                             setFilterTypes(
-                                changeFilterValue(filterTypes, title, i)
+                                changeFilterValue(filterTypes, id, i)
                             )
                         }
                     >

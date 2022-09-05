@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { IFilterType, setActiveFilters, setPrice } from "../../store/slices/filterSlice";
+import { setActiveFilters, setPrice } from "../../store/slices/filterSlice";
 import { selectProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../store/store";
+import { IFilterType } from "../../types";
 import { getPrice } from "../../utils/getMinPrice";
 import AccordionSelect from "../AccordionSelect/AccordionSelect";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
@@ -17,13 +18,14 @@ const Sidebar = () => {
     const { devices, filters } = useSelector(selectProducts);
     const [filterTypes, setFilterTypes] = useState<IFilterType>({
         brands: [],
-        processors: [],
+        rom: [],
+        ram: [],
     });
 
     const onClickSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(setPrice({ min: minVal, max: maxVal }));
-        dispatch(setActiveFilters(filterTypes))
+        dispatch(setActiveFilters(filterTypes));
     };
 
     if (!devices || !filters) {
@@ -53,6 +55,7 @@ const Sidebar = () => {
                             items={[...i.filterValues.map((i) => i.value)]}
                             setFilterTypes={setFilterTypes}
                             filterTypes={filterTypes}
+                            id={i.id}
                         />
                     ))}
 

@@ -40,7 +40,7 @@ export interface IValue {
 }
 
 export interface IFilter {
-    id: number;
+    id: string;
     title: string;
     filterValues: IValue[];
 }
@@ -48,4 +48,10 @@ export interface IFilter {
 export interface IAllData {
     devices: IDevice[];
     filterTypes: IFilter[];
+}
+
+export interface IFilterType {
+    brands: string[];
+    rom: string[];
+    ram: string[];
 }

@@ -5,6 +5,8 @@ interface sortedItemsProps {
     sortingType: string;
     priceValues: { min: number; max: number };
     brands: string[];
+    ram: string[];
+    rom: string[];
 }
 
 export const sortItems = ({
@@ -12,17 +14,16 @@ export const sortItems = ({
     sortingType,
     priceValues,
     brands,
+    ram,
+    rom,
 }: sortedItemsProps) => {
-    const sortedArr = brands.length
-        ? [...devices].filter(
-              (i) =>
-                  i.price >= priceValues.min &&
-                  i.price <= priceValues.max &&
-                  brands.includes(i.brand)
-          )
-        : [...devices].filter(
-              (i) => i.price >= priceValues.min && i.price <= priceValues.max
-          );
+    const sortedArr = [...devices]
+        .filter((i) => i.price >= priceValues.min && i.price <= priceValues.max)
+        .filter((i) => (brands.length ? brands.includes(i.brand) : i))
+        .filter((i) => (ram.length ? ram.includes(i.storage.split("-")[0]) : i))
+        .filter((i) =>
+            rom.length ? rom.includes(i.storage.split("-")[1]) : i
+        );
 
     if (sortingType === "popularity") {
         return sortedArr.sort((a, b) => a.title.localeCompare(b.title));
