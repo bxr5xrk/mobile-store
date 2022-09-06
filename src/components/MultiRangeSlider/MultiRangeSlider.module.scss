@@ -2,8 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px 0;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 
     .slider {
         position: relative;
@@ -93,6 +92,7 @@
             pointer-events: all;
             position: relative;
             z-index: 5;
+            border: 1px solid rgb(168, 168, 168);
         }
 
         &::-moz-range-thumb {

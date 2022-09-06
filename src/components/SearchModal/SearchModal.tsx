@@ -47,6 +47,8 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
         }
     };
 
+    console.log(1);
+
     return (
         <div className={st.wrapper} onClick={() => setShowModal(false)}>
             <div
@@ -73,7 +75,7 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                     />
                 </div>
 
-                {devices && debouncedValue.length > 3 && (
+                {devices && value.length > 3 && (
                     <div className={st.results}>
                         {results !== null && results.length > 1 ? (
                             results.map((i) => (
@@ -84,7 +86,8 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                                     onKeyDown={(e) => handleKey(e, i.slug)}
                                 >
                                     <p>
-                                        {i.brand} {i.fullTitle}
+                                        {i.brand !== "OnePlus" ? i.brand : ""}{" "}
+                                        {i.fullTitle}
                                     </p>
                                 </div>
                             ))

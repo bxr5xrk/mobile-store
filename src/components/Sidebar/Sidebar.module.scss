@@ -1,13 +1,46 @@
 .root {
-    border: 1px solid #111;
-    width: 300px;
+    width: 250px;
+    padding: 0 15px 15px 0;
+    border: 1px solid transparent;
+    border-right: 2px solid grey;
 
     h3 {
         text-align: center;
+        margin-bottom: 20px;
     }
 
     .filterTypes {
         display: flex;
         flex-direction: column;
+        gap: 5px;
+    }
+
+    button[type="submit"] {
+        margin: 10px 0;
+        background-color: transparent;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        border-radius: 15px;
+        cursor: pointer;
+        padding: 5px;
+        transition: 0.3s;
+        font-weight: 600;
+
+        &:hover {
+            color: var(--background);
+            background-color: var(--primary);
+        }
+    }
+
+    .reset {
+        color: var(--text);
+        text-align: center;
+        text-decoration: underline;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            color: var(--primary);
+        }
     }
 }
