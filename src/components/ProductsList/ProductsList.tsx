@@ -28,6 +28,7 @@ const ProductsList: FC<ProductsListProps> = ({ viewType }) => {
                             brands: activeFilters.brands,
                             ram: activeFilters.ram,
                             rom: activeFilters.rom,
+                            colors: activeFilters.colors,
                         }).map((device) => (
                             <Product
                                 key={device.id}

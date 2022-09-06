@@ -54,4 +54,5 @@ export interface IFilterType {
     brands: string[];
     rom: string[];
     ram: string[];
+    colors: string[];
 }

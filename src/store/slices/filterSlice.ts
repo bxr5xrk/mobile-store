@@ -21,6 +21,7 @@ const initialState: IFilter = {
         brands: [],
         rom: [],
         ram: [],
+        colors: [],
     },
 };
 
