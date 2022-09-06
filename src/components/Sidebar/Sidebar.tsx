@@ -20,6 +20,7 @@ const Sidebar = () => {
         brands: [],
         rom: [],
         ram: [],
+        colors: [],
     });
 
     const onClickSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,10 +48,9 @@ const Sidebar = () => {
                         setMinVal={setMinVal}
                         setMaxVal={setMaxVal}
                     />
-
                     {filters.map((i) => (
                         <AccordionSelect
-                            key={i.id}
+                            key={i.id + i.title}
                             title={i.title}
                             items={[...i.filterValues.map((i) => i.value)]}
                             setFilterTypes={setFilterTypes}
@@ -58,8 +58,20 @@ const Sidebar = () => {
                             id={i.id}
                         />
                     ))}
-
-                    <button type="submit">Показати</button>
+                    <button type="submit">Застосувати</button>{" "}
+                    <p
+                        className={st.reset}
+                        onClick={() =>
+                            setFilterTypes({
+                                brands: [],
+                                rom: [],
+                                ram: [],
+                                colors: [],
+                            })
+                        }
+                    >
+                        reset All
+                    </p>
                 </form>
             )}
         </aside>

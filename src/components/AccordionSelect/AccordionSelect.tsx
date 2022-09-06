@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { IFilterType } from "../../types";
-import { changeFilterValue } from "../../utils/changeFilterValue";
+import Checkbox from "../Checkbox/Checkox";
 import st from "./AccordionSelect.module.scss";
 
 interface AccordionSelectProps {
@@ -25,7 +25,9 @@ const AccordionSelect: FC<AccordionSelectProps> = ({
             ? filterTypes.brands
             : id === "cl7owgcuunfk40atecqpji7au"
             ? filterTypes.ram
-            : filterTypes.rom;
+            : id === "cl7owj2ikwyjj0atcizfjeqpp"
+            ? filterTypes.rom
+            : filterTypes.colors;
 
     return (
         <div className={st.root}>
@@ -47,22 +49,19 @@ const AccordionSelect: FC<AccordionSelectProps> = ({
 
             <div className={`${st.dropdown} ${showDropdown && st.show}`}>
                 {items.map((i) => (
-                    <div
-                        className={st.item}
+                    <Checkbox
                         key={i}
-                        onClick={() =>
-                            setFilterTypes(
-                                changeFilterValue(filterTypes, id, i)
-                            )
+                        title={i}
+                        id={id}
+                        filterTypes={filterTypes}
+                        checked={
+                            currentFilter.find((item) => item === i)
+                                ? true
+                                : false
                         }
-                    >
-                        <span>
-                            {currentFilter.find((item) => item === i)
-                                ? "+"
-                                : "-"}
-                        </span>
-                        <p>{i}</p>
-                    </div>
+                        handleClick={setFilterTypes}
+                        styles={`${i.at(0) === "#" ? i : ""}`}
+                    />
                 ))}
             </div>
         </div>
