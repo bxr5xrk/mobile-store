@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { setActiveFilters, setPrice } from "../../store/slices/filterSlice";
+import {
+    selectFilter,
+    setActiveFilters,
+    setPrice,
+} from "../../store/slices/filterSlice";
 import { selectProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../store/store";
 import { IFilterType } from "../../types";
 import { getPrice } from "../../utils/getMinPrice";
+import { ParseSearchQueryInMount } from "../../utils/parseSearchQueryInMount";
 import AccordionSelect from "../AccordionSelect/AccordionSelect";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
 import st from "./Sidebar.module.scss";
@@ -16,6 +21,7 @@ const Sidebar = () => {
     const [minVal, setMinVal] = useState(0);
     const [maxVal, setMaxVal] = useState(0);
     const { devices, filters } = useSelector(selectProducts);
+    const { activeFilters } = useSelector(selectFilter);
     const [filterTypes, setFilterTypes] = useState<IFilterType>({
         brands: [],
         rom: [],
@@ -28,6 +34,9 @@ const Sidebar = () => {
         dispatch(setPrice({ min: minVal, max: maxVal }));
         dispatch(setActiveFilters(filterTypes));
     };
+
+    // parse search query at the begining
+    ParseSearchQueryInMount({ activeFilters, setFilterTypes });
 
     if (!devices || !filters) {
         return <>error</>;

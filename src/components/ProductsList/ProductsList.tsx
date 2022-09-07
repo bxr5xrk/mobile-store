@@ -1,18 +1,32 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { selectFilter } from "../../store/slices/filterSlice";
 import { selectProducts } from "../../store/slices/productsSlice";
 import { selectProductsView } from "../../store/slices/productsViewSlice";
+import SQ from "../../utils/parseSearchQuery";
 import { sortItems } from "../../utils/sortItems";
 import Product from "../ProductGridView/ProductGridView";
 import ProductListView from "../ProductListView/ProductListView";
 import st from "./ProductsList.module.scss";
 
 const ProductsList: FC = () => {
+    const navigate = useNavigate();
     const { devices } = useSelector(selectProducts);
     const { activeView } = useSelector(selectProductsView);
     const { sortingType, priceValues, activeFilters } =
         useSelector(selectFilter);
+
+    useEffect(() => {
+        if (activeFilters.brands.length) {
+            const query = SQ.putItem("brands", activeFilters.brands);
+
+            navigate(`.${query}`);
+        } else {
+            navigate(`.`);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeFilters]);
 
     return (
         <section className={st.root}>
