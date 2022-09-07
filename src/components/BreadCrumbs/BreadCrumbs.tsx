@@ -1,17 +1,15 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import { selectFilter } from "../../store/slices/filterSlice";
-import SQ from "../../utils/parseSearchQuery";
+import { selectFilter } from "../../store/slices/filterSlice";
 import st from "./BreadCrumbs.module.scss";
 
 const BreadCrumbs: FC = () => {
-    // const { activeFilters } = useSelector(selectFilter);
+    const { activeFilters } = useSelector(selectFilter);
     const { i18n } = useTranslation();
 
-    // const brands = activeFilters.brands;
-    const brandsParams = SQ.getItem("brands");
+    const brandsParams = activeFilters.brands;
 
     // const links = [
     //     {

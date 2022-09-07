@@ -18,13 +18,11 @@ const ProductsList: FC = () => {
         useSelector(selectFilter);
 
     useEffect(() => {
-        if (activeFilters.brands.length) {
-            const query = SQ.putItem("brands", activeFilters.brands);
-
+        if (activeFilters.brands.length || activeFilters.ram.length) {
+            const query = SQ.putItems(activeFilters);
             navigate(`.${query}`);
-        } else {
-            navigate(`.`);
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFilters]);
 

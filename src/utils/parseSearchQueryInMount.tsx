@@ -17,10 +17,10 @@ export const ParseSearchQueryInMount = ({
     const [isMounted, setisMounted] = useState(false);
 
     useEffect(() => {
-        const brandsParams = SQ.getItem("brands");
+        const brandsParams = SQ.getItems();
         if (brandsParams) {
             dispatch(
-                setActiveFilters({ ...activeFilters, brands: brandsParams })
+                setActiveFilters({ ...activeFilters, ...brandsParams })
             );
             setisMounted(true);
         }
