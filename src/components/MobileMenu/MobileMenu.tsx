@@ -34,7 +34,7 @@ const MobileMenu: FC<MobileMenuProps> = ({
                 }`}
             >
                 <div className={st.top}>
-                    <h2>ALLO</h2>
+                    <h2>Mobile Store</h2>
 
                     <p
                         onClick={() =>
