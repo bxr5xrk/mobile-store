@@ -1,33 +1,27 @@
 import { FC, useState } from "react";
-import { IFilterType } from "../../types";
+import { useSelector } from "react-redux";
+import { selectFilter } from "../../store/slices/filterSlice";
 import Checkbox from "../Checkbox/Checkox";
 import st from "./AccordionSelect.module.scss";
 
 interface AccordionSelectProps {
     title: string;
     items: string[];
-    setFilterTypes: (i: IFilterType) => void;
-    filterTypes: IFilterType;
     id: string;
 }
 
-const AccordionSelect: FC<AccordionSelectProps> = ({
-    title,
-    items,
-    setFilterTypes,
-    filterTypes,
-    id,
-}) => {
+const AccordionSelect: FC<AccordionSelectProps> = ({ title, items, id }) => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const { activeFilters } = useSelector(selectFilter);
 
     const currentFilter =
         id === "cl7onewcbakui0duq4nwe25wo"
-            ? filterTypes.brands
+            ? activeFilters.brands
             : id === "cl7owgcuunfk40atecqpji7au"
-            ? filterTypes.ram
+            ? activeFilters.ram
             : id === "cl7owj2ikwyjj0atcizfjeqpp"
-            ? filterTypes.rom
-            : filterTypes.colors;
+            ? activeFilters.rom
+            : activeFilters.colors;
 
     return (
         <div className={st.root}>
@@ -53,13 +47,11 @@ const AccordionSelect: FC<AccordionSelectProps> = ({
                         key={i}
                         title={i}
                         id={id}
-                        filterTypes={filterTypes}
                         checked={
                             currentFilter.find((item) => item === i)
                                 ? true
                                 : false
                         }
-                        handleClick={setFilterTypes}
                         styles={`${i.at(0) === "#" ? i : ""}`}
                     />
                 ))}

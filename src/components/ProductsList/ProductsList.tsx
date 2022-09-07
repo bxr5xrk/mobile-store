@@ -18,10 +18,8 @@ const ProductsList: FC = () => {
         useSelector(selectFilter);
 
     useEffect(() => {
-        if (activeFilters.brands.length || activeFilters.ram.length) {
-            const query = SQ.putItems(activeFilters);
-            navigate(`.${query}`);
-        }
+        const query = SQ.setParams(activeFilters);
+        navigate(`.${query}`);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFilters]);

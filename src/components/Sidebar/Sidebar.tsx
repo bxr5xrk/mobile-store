@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import {
@@ -8,7 +7,6 @@ import {
 } from "../../store/slices/filterSlice";
 import { selectProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../store/store";
-import { IFilterType } from "../../types";
 import { getPrice } from "../../utils/getMinPrice";
 import { ParseSearchQueryInMount } from "../../utils/parseSearchQueryInMount";
 import AccordionSelect from "../AccordionSelect/AccordionSelect";
@@ -18,70 +16,68 @@ import st from "./Sidebar.module.scss";
 const Sidebar = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const [minVal, setMinVal] = useState(0);
-    const [maxVal, setMaxVal] = useState(0);
     const { devices, filters } = useSelector(selectProducts);
     const { activeFilters } = useSelector(selectFilter);
-    const [filterTypes, setFilterTypes] = useState<IFilterType>({
-        brands: [],
-        rom: [],
-        ram: [],
-        colors: [],
-    });
-
-    const onClickSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        dispatch(setPrice({ min: minVal, max: maxVal }));
-        dispatch(setActiveFilters(filterTypes));
-    };
 
     // parse search query at the begining
-    ParseSearchQueryInMount({ activeFilters, setFilterTypes });
+    ParseSearchQueryInMount({
+        activeFilters,
+    });
 
     if (!devices || !filters) {
         return <>error</>;
     }
 
+    const resetAll = () => {
+        dispatch(
+            setActiveFilters({
+                brands: [],
+                rom: [],
+                ram: [],
+                colors: [],
+            })
+        );
+        dispatch(
+            setPrice({
+                min: Number(getPrice(devices, "min")),
+                max: Number(getPrice(devices, "max")),
+            })
+        );
+    };
+
     return (
         <aside className={st.root}>
-            <h3>{t("sidebarTitle")}</h3>
+            <div className={st.top}>
+                <h3>{t("sidebarTitle")}</h3>
+                <svg
+                    onClick={resetAll}
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 459.313 459.314"
+                >
+                    <path
+                        d="M459.313,229.648c0,22.201-17.992,40.199-40.205,40.199H40.181c-11.094,0-21.14-4.498-28.416-11.774
+		C4.495,250.808,0,240.76,0,229.66c-0.006-22.204,17.992-40.199,40.202-40.193h378.936
+		C441.333,189.472,459.308,207.456,459.313,229.648z"
+                    />
+                </svg>
+            </div>
 
             {devices.length > 1 && (
-                <form
-                    className={st.filterTypes}
-                    onSubmit={(e) => onClickSubmit(e)}
-                >
+                <div className={st.filterTypes}>
                     <MultiRangeSlider
                         min={getPrice(devices, "min") - 100}
                         max={getPrice(devices, "max") + 100}
-                        setMinVal={setMinVal}
-                        setMaxVal={setMaxVal}
                     />
                     {filters.map((i) => (
                         <AccordionSelect
                             key={i.id + i.title}
                             title={i.title}
                             items={[...i.filterValues.map((i) => i.value)]}
-                            setFilterTypes={setFilterTypes}
-                            filterTypes={filterTypes}
                             id={i.id}
                         />
                     ))}
-                    <button type="submit">Застосувати</button>{" "}
-                    <p
-                        className={st.reset}
-                        onClick={() =>
-                            setFilterTypes({
-                                brands: [],
-                                rom: [],
-                                ram: [],
-                                colors: [],
-                            })
-                        }
-                    >
-                        reset All
-                    </p>
-                </form>
+                </div>
             )}
         </aside>
     );

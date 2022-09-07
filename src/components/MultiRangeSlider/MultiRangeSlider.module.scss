@@ -3,6 +3,19 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 70px;
+    position: relative;
+
+    .popup {
+        position: absolute;
+        top: 0;
+        right: -100px;
+        padding: 5px 10px;
+        background-color: var(--background);
+        color: var(--text);
+        border: 1px solid var(--primary);
+        border-radius: 15px;
+        cursor: pointer;
+    }
 
     .slider {
         position: relative;
@@ -117,5 +130,22 @@
 
     input[type="number"] {
         -moz-appearance: textfield;
+    }
+}
+
+.filterByPrice {
+    // margin: 10px 0;
+    background-color: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    border-radius: 15px;
+    cursor: pointer;
+    padding: 5px;
+    transition: 0.3s;
+    font-weight: 600;
+
+    &:hover {
+        color: var(--background);
+        background-color: var(--primary);
     }
 }

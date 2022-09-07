@@ -1,5 +1,7 @@
 import React, { FC } from "react";
-import { IFilterType } from "../../types";
+import { useSelector } from "react-redux";
+import { selectFilter, setActiveFilters } from "../../store/slices/filterSlice";
+import { useAppDispatch } from "../../store/store";
 import { changeFilterValue } from "../../utils/changeFilterValue";
 import st from "./Checkbox.module.scss";
 
@@ -7,8 +9,6 @@ interface CheckBoxProps {
     title: string;
     checked: boolean;
     id: string;
-    handleClick: (i: IFilterType) => void;
-    filterTypes: IFilterType;
     styles: string;
 }
 
@@ -16,15 +16,21 @@ const Checkbox: FC<CheckBoxProps> = ({
     title,
     checked,
     id,
-    handleClick,
-    filterTypes,
     styles,
 }) => {
+    const { activeFilters } = useSelector(selectFilter);
+    const dispatch = useAppDispatch();
     return (
         <div
             className={st.status}
-            onClick={() =>
-                handleClick(changeFilterValue(filterTypes, id, title))
+            onClick={
+                () =>
+                    dispatch(
+                        setActiveFilters(
+                            changeFilterValue(activeFilters, id, title)
+                        )
+                    )
+                // handleClick(changeFilterValue(filterTypes, id, title))
             }
         >
             <input

@@ -4,9 +4,27 @@
     border: 1px solid transparent;
     border-right: 2px solid grey;
 
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        svg {
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            fill: var(--text);
+            transition: 0.3s;
+
+            &:hover {
+                fill: var(--primary);
+            }
+        }
+    }
+
     h3 {
         text-align: center;
-        margin-bottom: 20px;
     }
 
     .filterTypes {
@@ -15,27 +33,10 @@
         gap: 5px;
     }
 
-    button[type="submit"] {
-        margin: 10px 0;
-        background-color: transparent;
-        border: 1px solid var(--primary);
-        color: var(--primary);
-        border-radius: 15px;
-        cursor: pointer;
-        padding: 5px;
-        transition: 0.3s;
-        font-weight: 600;
-
-        &:hover {
-            color: var(--background);
-            background-color: var(--primary);
-        }
-    }
-
     .reset {
         color: var(--text);
-        text-align: center;
-        text-decoration: underline;
+        text-align: right;
+        // text-decoration: underline;
         cursor: pointer;
         transition: 0.3s;
 

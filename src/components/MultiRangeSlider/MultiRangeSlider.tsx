@@ -8,28 +8,23 @@ import {
     useState,
 } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
+import { setPrice } from "../../store/slices/filterSlice";
+import { useAppDispatch } from "../../store/store";
 import st from "./MultiRangeSlider.module.scss";
 
 interface MultiRangeSliderProps {
     min: number;
     max: number;
-    setMinVal: (i: number) => void;
-    setMaxVal: (i: number) => void;
 }
 
-const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
-    min,
-    max,
-    setMaxVal,
-    setMinVal,
-}) => {
+const MultiRangeSlider: FC<MultiRangeSliderProps> = ({ min, max }) => {
     const [_minVal, _setMinVal] = useState("0");
     const [_maxVal, _setMaxVal] = useState("0");
-    const minValRef = useRef<HTMLInputElement>(null);
-    const maxValRef = useRef<HTMLInputElement>(null);
     const range = useRef<HTMLDivElement>(null);
     const debMinVal = useDebounce(_minVal, 500);
     const debMaxVal = useDebounce(_maxVal, 500);
+    const dispatch = useAppDispatch();
+    const [showBtn, setShowBtn] = useState(false);
 
     const getPercent = useCallback(
         (value: number) => Math.round(((value - min) / (max - min)) * 100),
@@ -37,45 +32,50 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
     );
 
     useEffect(() => {
-        if (maxValRef.current) {
-            const minPercent = getPercent(Number(_minVal));
-            const maxPercent = getPercent(+maxValRef.current.value);
-            if (
-                range.current &&
-                minPercent >= 0 &&
-                maxPercent <= 100 &&
-                Number(_minVal) <= max
-            ) {
-                range.current.style.left = `${minPercent}%`;
-                range.current.style.width = `${maxPercent - minPercent}%`;
-            }
+        const minPercent = getPercent(Number(_minVal));
+        const maxPercent = getPercent(+_maxVal);
+        if (
+            range.current &&
+            minPercent >= 0 &&
+            maxPercent <= 100 &&
+            Number(_minVal) <= max
+        ) {
+            range.current.style.left = `${minPercent}%`;
+            range.current.style.width = `${maxPercent - minPercent}%`;
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [_minVal]);
 
     useEffect(() => {
-        if (minValRef.current) {
-            const minPercent = getPercent(+minValRef.current.value);
-            const maxPercent = getPercent(Number(_maxVal));
-
-            if (range.current && minPercent >= 0 && maxPercent <= 100) {
-                range.current.style.width = `${maxPercent - minPercent}%`;
-            }
+        const minPercent = getPercent(+_minVal);
+        const maxPercent = getPercent(Number(_maxVal));
+        if (range.current && minPercent >= 0 && maxPercent <= 100) {
+            range.current.style.width = `${maxPercent - minPercent}%`;
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [_maxVal]);
 
     useEffect(() => {
-        setMinVal(
+        _setMinVal(
             Number(_minVal) < min || Number(_minVal) > max
-                ? min
-                : Number(debMinVal)
+                ? String(min)
+                : debMinVal
         );
-        setMaxVal(
+        _setMaxVal(
             Number(_maxVal) > max || Number(_maxVal) < min
-                ? max
-                : Number(debMaxVal)
+                ? String(max)
+                : debMaxVal
         );
+
+        //show popup
+        if (Number(_minVal) !== 0) {
+            if (Number(_minVal) !== min || Number(_maxVal) !== max) {
+                setShowBtn(true);
+            }
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debMaxVal, debMinVal]);
 
@@ -86,15 +86,30 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
         }
     }, [min, max]);
 
+    const handleClick = () => {
+        dispatch(
+            setPrice({
+                min: Number(_minVal),
+                max: Number(_maxVal),
+            })
+        );
+        setShowBtn(false);
+    };
+
     return (
         <div className={st.container}>
+            {showBtn && (
+                <button onClick={handleClick} className={st.popup}>
+                    filter price
+                </button>
+            )}
+
             <input
                 type="range"
                 min={min}
                 max={max}
                 value={_minVal}
-                ref={minValRef}
-                step={100}
+                step={200}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     const value = Math.min(
                         +event.target.value,
@@ -114,8 +129,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
                 min={min}
                 max={max}
                 value={_maxVal}
-                ref={maxValRef}
-                step={100}
+                step={200}
                 onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     const value = Math.max(
                         +event.target.value,

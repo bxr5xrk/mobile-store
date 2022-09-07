@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { setActiveFilters } from "../store/slices/filterSlice";
+import { selectProducts } from "../store/slices/productsSlice";
 import { useAppDispatch } from "../store/store";
 import { IFilterType } from "../types";
 import SQ from "./parseSearchQuery";
 
 interface props {
     activeFilters: IFilterType;
-    setFilterTypes: (i: IFilterType) => void;
 }
 
 export const ParseSearchQueryInMount = ({
     activeFilters,
-    setFilterTypes,
 }: props) => {
     const dispatch = useAppDispatch();
+    const { filters } = useSelector(selectProducts);
     const [isMounted, setisMounted] = useState(false);
 
     useEffect(() => {
-        const brandsParams = SQ.getItems();
+        const brandsParams = SQ.getParams();
         if (brandsParams) {
-            dispatch(
-                setActiveFilters({ ...activeFilters, ...brandsParams })
-            );
+            console.log(brandsParams, filters);
+            dispatch(setActiveFilters({ ...activeFilters, ...brandsParams }));
             setisMounted(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,7 +29,8 @@ export const ParseSearchQueryInMount = ({
 
     useEffect(() => {
         if (isMounted) {
-            setFilterTypes(activeFilters);
+            // setFilterTypes(activeFilters);
+            dispatch(setActiveFilters(activeFilters))
             setisMounted(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
