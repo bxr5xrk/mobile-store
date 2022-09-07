@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import filterSlice from "./slices/filterSlice";
 import productsSlice from "./slices/productsSlice";
+import productsViewSlice from "./slices/productsViewSlice";
 import themeSlice from "./slices/themeSlice";
 
 export const store = configureStore({
@@ -9,6 +10,7 @@ export const store = configureStore({
         theme: themeSlice,
         products: productsSlice,
         filter: filterSlice,
+        productsView: productsViewSlice,
     },
 });
 

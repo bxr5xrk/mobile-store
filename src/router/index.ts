@@ -5,7 +5,7 @@ import ProductPage from "../pages/ProductPage/ProductPage";
 import Watchlist from "../pages/Watchlist/Watchlist";
 
 export const routes = [
-    { path: "/", element: LandingPage },
+    { path: "/", element: LandingPage  },
     { path: "/products", element: ProductsPage },
     { path: "/products/:slugParams", element: ProductPage },
     { path: "/cart", element: Cart },

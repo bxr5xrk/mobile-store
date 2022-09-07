@@ -2,23 +2,21 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { selectFilter } from "../../store/slices/filterSlice";
 import { selectProducts } from "../../store/slices/productsSlice";
+import { selectProductsView } from "../../store/slices/productsViewSlice";
 import { sortItems } from "../../utils/sortItems";
 import Product from "../ProductGridView/ProductGridView";
 import ProductListView from "../ProductListView/ProductListView";
 import st from "./ProductsList.module.scss";
 
-interface ProductsListProps {
-    viewType: number;
-}
-
-const ProductsList: FC<ProductsListProps> = ({ viewType }) => {
+const ProductsList: FC = () => {
     const { devices } = useSelector(selectProducts);
+    const { activeView } = useSelector(selectProductsView);
     const { sortingType, priceValues, activeFilters } =
         useSelector(selectFilter);
 
     return (
         <section className={st.root}>
-            {viewType === 1 ? (
+            {activeView === 1 ? (
                 <div className={st.gridView}>
                     {devices &&
                         sortItems({
