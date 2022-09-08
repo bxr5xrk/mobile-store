@@ -1,0 +1,46 @@
+.notFound {
+    text-align: center;
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
+    justify-content: center;
+
+    h1 {
+        font-size: 150px;
+    }
+
+    h2 {
+        font-size: 40px;
+    }
+
+    a {
+        margin-top: 30px;
+
+        button {
+            color: var(--text);
+            border: 1px solid var(--text);
+            padding: 10px 25px;
+            border-radius: 15px;
+            background-color: transparent;
+            transition: 0.3s;
+
+            &:hover {
+                border: 1px solid var(--primary);
+            }
+        }
+    }
+
+    @media (max-width: 636px) {
+        h1 {
+            font-size: 100px;
+        }
+
+        h2 {
+            font-size: 25px;
+        }
+
+        a {
+            font-size: 20px;
+        }
+    }
+}

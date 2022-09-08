@@ -14,7 +14,7 @@ const App = () => {
                             element={<i.element />}
                         />
                     ))}
-                    <Route path="*" element={<Navigate to="/" replace />} />
+                    {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
                 </Routes>
             </Layout>
         </>
