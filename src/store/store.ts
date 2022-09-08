@@ -4,6 +4,7 @@ import filterSlice from "./slices/filterSlice";
 import productsSlice from "./slices/productsSlice";
 import productsViewSlice from "./slices/productsViewSlice";
 import themeSlice from "./slices/themeSlice";
+import watchlistSlice from "./slices/watchlistSlice";
 
 export const store = configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
         products: productsSlice,
         filter: filterSlice,
         productsView: productsViewSlice,
+        watchlist: watchlistSlice,
     },
 });
 

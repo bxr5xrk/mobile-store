@@ -1,6 +1,12 @@
 import { t } from "i18next";
-import { FC, useState } from "react";
+import { FC } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import {
+    selectWatchlist,
+    setWatchlistItem,
+} from "../../store/slices/watchlistSlice";
+import { useAppDispatch } from "../../store/store";
 import { IDeviceColor, IDeviceImage } from "../../types";
 import ItemColors from "../ItemColors/ItemColors";
 import ItemImageSlider from "../ItemImageSlider/ItemImageSlider";
@@ -12,6 +18,7 @@ interface ProductGridViewProps {
     colors: IDeviceColor[];
     price: string;
     slug: string;
+    id: string;
 }
 
 const ProductGridView: FC<ProductGridViewProps> = ({
@@ -20,9 +27,15 @@ const ProductGridView: FC<ProductGridViewProps> = ({
     colors,
     price,
     slug,
+    id,
 }) => {
+    const { watchlist } = useSelector(selectWatchlist);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [show, setShow] = useState(false);
+
+    const handleClickWatchlist = () => {
+        dispatch(setWatchlistItem(id));
+    };
 
     return (
         <div className={st.root}>
@@ -36,7 +49,7 @@ const ProductGridView: FC<ProductGridViewProps> = ({
                 <div className={st.root__bottom}>
                     <h4>{`${t("from")} ${price}₴`}</h4>
 
-                    <div className={st.icons} onClick={() => setShow(!show)}>
+                    <div className={st.icons} onClick={handleClickWatchlist}>
                         <svg
                             version="1.1"
                             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +67,11 @@ const ProductGridView: FC<ProductGridViewProps> = ({
 				c0.147,1.242,0.187,1.586,0.245,2.333C470.993,183.234,470.174,196.504,466.46,213.526z"
                             />
                             <g
-                                className={`${show ? st.heart : ""}`}
+                                className={
+                                    watchlist && watchlist.find((i) => i === id)
+                                        ? st.heart
+                                        : ""
+                                }
                                 fill="none"
                             >
                                 <path d="M370.994,49.998c-61.509,0-112.296,45.894-119.994,105.306    c-7.698-59.412-58.485-105.306-119.994-105.306C64.176,49.998,10,104.174,10,171.004s80.283,135.528,116.45,166.574    C160.239,366.582,251,452.002,251,452.002s90.761-85.42,124.55-114.424C411.717,306.532,492,237.834,492,171.004    S437.824,49.998,370.994,49.998z" />

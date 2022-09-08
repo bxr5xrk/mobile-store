@@ -20,7 +20,7 @@ export interface IDeviceColor {
 export type IBrand = string;
 
 export interface IDevice {
-    id: number;
+    id: string;
     title: string;
     fullTitle: string;
     additionDate: string;

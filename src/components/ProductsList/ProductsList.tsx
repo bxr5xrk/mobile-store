@@ -45,6 +45,7 @@ const ProductsList: FC = () => {
                                 colors={device.deviceColors}
                                 price={String(device.price)}
                                 slug={device.slug}
+                                id={device.id}
                             />
                         ))}
                 </div>
