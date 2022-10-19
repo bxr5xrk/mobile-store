@@ -56,3 +56,5 @@ export interface IFilterType {
     ram: string[];
     colors: string[];
 }
+
+export type themeType = "light" | "dark";

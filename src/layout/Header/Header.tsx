@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +7,8 @@ import { Service } from "../../api/AlloService";
 import MobileMenu from "../../components/MobileMenu/MobileMenu";
 import Search from "../../components/Search/Search";
 import { selectProducts } from "../../store/slices/productsSlice";
-import { selectTheme, setTheme } from "../../store/slices/themeSlice";
 import { useAppDispatch } from "../../store/store";
+import { themeType } from "../../types";
 import st from "./Header.module.scss";
 
 const headerItems = [
@@ -76,12 +76,13 @@ c0.147,1.242,0.187,1.586,0.245,2.333C470.993,183.234,470.174,196.504,466.46,213.
 ];
 
 export const Header = () => {
-    const { theme } = useSelector(selectTheme);
     const dispatch = useAppDispatch();
     const { i18n } = useTranslation();
     const [showBurger, setShowBurger] = useState(false);
     const { devices } = useSelector(selectProducts);
     const navigate = useNavigate();
+    const LSTheme = localStorage.getItem("theme") || "light";
+    const [theme, setTheme] = useState<themeType>(LSTheme as themeType);
 
     useEffect(() => {
         if (theme === "dark") {
@@ -136,9 +137,7 @@ export const Header = () => {
                     <div
                         className={st.item}
                         onClick={() =>
-                            dispatch(
-                                setTheme(theme === "dark" ? "light" : "dark")
-                            )
+                            setTheme(theme === "dark" ? "light" : "dark")
                         }
                     >
                         {theme === "light" ? (
@@ -191,6 +190,7 @@ export const Header = () => {
                 showBurger={showBurger}
                 setShowBurger={setShowBurger}
                 theme={theme}
+                setTheme={setTheme}
             />
         </>
     );

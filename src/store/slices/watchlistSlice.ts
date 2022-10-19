@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-const getWatshlistItems = (): string[] | null => {
+const getWatchlistItems = (): string[] | null => {
     const data = localStorage.getItem("watchlist");
     return data ? JSON.parse(data) : null;
 };
@@ -11,7 +11,7 @@ interface IWatchlist {
 }
 
 const initialState: IWatchlist = {
-    watchlist: getWatshlistItems(),
+    watchlist: getWatchlistItems(),
 };
 
 const watchlistSlice = createSlice({

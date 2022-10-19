@@ -1,22 +1,22 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { setTheme } from "../../store/slices/themeSlice";
-import { useAppDispatch } from "../../store/store";
+import { themeType } from "../../types";
 import st from "./MobileMenu.module.scss";
 
 interface MobileMenuProps {
     showBurger: boolean;
-    theme: string;
     setShowBurger: (b: boolean) => void;
+    theme: themeType;
+    setTheme: (i: themeType) => void;
 }
 
 const MobileMenu: FC<MobileMenuProps> = ({
     showBurger,
-    theme,
     setShowBurger,
+    theme,
+    setTheme,
 }) => {
-    const dispatch = useAppDispatch();
     const { i18n, t } = useTranslation();
 
     return (
@@ -49,8 +49,9 @@ const MobileMenu: FC<MobileMenuProps> = ({
 
                 <div
                     className={st.item}
-                    onClick={() =>
-                        dispatch(setTheme(theme === "dark" ? "light" : "dark"))
+                    onClick={
+                        () => setTheme(theme === "dark" ? "light" : "dark")
+                        // dispatch(setTheme(theme === "dark" ? "light" : "dark"))
                     }
                 >
                     {theme === "light" ? (
