@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import SearchModal from "../SearchModal/SearchModal";
 import st from "./Search.module.scss";
 
@@ -33,4 +33,4 @@ const Search: FC = () => {
     );
 };
 
-export default Search;
+export default memo(Search);

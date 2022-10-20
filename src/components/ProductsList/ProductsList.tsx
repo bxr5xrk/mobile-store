@@ -6,7 +6,7 @@ import { selectProducts } from "../../store/slices/productsSlice";
 import { selectProductsView } from "../../store/slices/productsViewSlice";
 import SQ from "../../utils/parseSearchQuery";
 import { sortItems } from "../../utils/sortItems";
-import Product from "../ProductGridView/ProductGridView";
+import ProductGridView from "../ProductGridView/ProductGridView";
 import ProductListView from "../ProductListView/ProductListView";
 import st from "./ProductsList.module.scss";
 
@@ -38,7 +38,7 @@ const ProductsList: FC = () => {
                             rom: activeFilters.rom,
                             colors: activeFilters.colors,
                         }).map((device) => (
-                            <Product
+                            <ProductGridView
                                 key={device.id}
                                 fullTitle={device.fullTitle}
                                 images={device.images}
