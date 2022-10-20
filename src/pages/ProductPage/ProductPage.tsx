@@ -1,37 +1,37 @@
-import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useQuery } from "@apollo/client";
+import { FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Service } from "../../api/AlloService";
-import { selectProducts } from "../../store/slices/productsSlice";
+import { GET_SINGLE_DEVICE } from "../../queries/query";
 import { IDevice } from "../../types";
 
+const FetchSingleDevice = (slugParams?: string) => {
+    const { loading, error, data } = useQuery<{ device: IDevice }>(
+        GET_SINGLE_DEVICE,
+        {
+            variables: { slug: slugParams },
+        }
+    );
+
+    return { loading, error, data: data?.device };
+};
+
 const ProductPage: FC = () => {
-    const { devices } = useSelector(selectProducts);
-    const [product, setProduct] = useState<IDevice | null | "error">(null);
     const { slugParams } = useParams();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (devices && slugParams) {
-            const device = devices.find((i) => i.slug === slugParams);
-            if (device) {
-                setProduct(device);
-            } else {
-                Service.fetchProduct(setProduct, slugParams);
-            }
-        } else if (slugParams) {
-            Service.fetchProduct(setProduct, slugParams);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [slugParams]);
+    const { loading, error, data } = FetchSingleDevice(slugParams);
 
-    if (product === "error") {
-        return <p>error</p>;
-    }
+    if (loading) console.log("loading");
+
+    if (error) return <h1>error</h1>;
+
+    if (!loading && !data) return <h1>Not found</h1>;
+
+    console.log(data, slugParams);
 
     return (
         <main>
-            {product === null ? <p>loading</p> : <p>{product.fullTitle}</p>}
+            <h1>{data && data.fullTitle}</h1>
             <button onClick={() => navigate("/products")}>back</button>
         </main>
     );

@@ -1,9 +1,9 @@
-import { QUERY_ALL_DATA } from "./../schema/query";
+import { QUERY_ALL_DATA } from "../queries/query";
 import { CONTENT_API } from "./../.data";
 import { IAllData, IDevice } from "./../types/index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import request from "graphql-request";
-import { QUERY_SINGLE } from "../schema/query";
+import { QUERY_SINGLE } from "../queries/query";
 
 export class Service {
     static fetchProducts = createAsyncThunk(
@@ -35,6 +35,7 @@ export class Service {
                 QUERY_SINGLE,
                 variables
             );
+            console.log(device);
 
             if (device !== null) {
                 return setProduct(device);
