@@ -77,7 +77,6 @@ export const Header = () => {
     const dispatch = useAppDispatch();
     const { i18n } = useTranslation();
     const [showBurger, setShowBurger] = useState(false);
-    // const { devices } = useSelector(selectProducts);
     const navigate = useNavigate();
     const LSTheme = localStorage.getItem("theme") || "light";
     const [theme, setTheme] = useState<themeType>(LSTheme as themeType);
@@ -102,10 +101,8 @@ export const Header = () => {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [i18n.language]);
-    
-    const { error, loading, data } = Service.fetchAllDevices();
 
-    console.log(data, error, loading);
+    const { data } = Service.fetchAllDevices();
 
     const changeCookie = () => {
         i18n.changeLanguage(i18n.language === "en" ? "uk" : "en");

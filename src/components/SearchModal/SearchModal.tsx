@@ -9,6 +9,30 @@ interface SearchModalProps {
     setShowModal: (i: boolean) => void;
 }
 
+interface ILatestResult {
+    slug: string;
+    title: string;
+}
+
+const getLatestResults = (): ILatestResult[] => {
+    const getItemsFromLS = localStorage.getItem("latestResults");
+    return getItemsFromLS ? JSON.parse(getItemsFromLS) : [];
+};
+
+const setLatestResults = (item: ILatestResult) => {
+    const latestResults = getLatestResults();
+
+    if (latestResults.length === 3) {
+        latestResults.splice(0, 1);
+    }
+    latestResults.push(item);
+
+    localStorage.setItem(
+        "latestResults",
+        JSON.stringify(latestResults.filter((v, i, a) => a.indexOf(v) === i))
+    );
+};
+
 const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
     const [value, setValue] = useState("");
     const { data } = Service.fetchAllDevices();
@@ -16,16 +40,26 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
     const debouncedValue = useDebounce(value, 500);
     const { filteredValues } = useFilter(debouncedValue, data);
 
-    const onClickLink = (slug: string) => {
+    const latestResults = getLatestResults();
+
+    const onClickLink = (slug: string, title: string) => {
+        setLatestResults({ slug, title });
+
         navigate(`products/${slug}`);
         setShowModal(false);
     };
 
-    const handleKey = (e: KeyboardEvent<HTMLDivElement>, slug: string) => {
+    const handleKey = (
+        e: KeyboardEvent<HTMLDivElement>,
+        slug: string,
+        title: string
+    ) => {
         if (e.key === "Enter") {
-            onClickLink(slug);
+            onClickLink(slug, title);
         }
     };
+
+    console.log(latestResults);
 
     return (
         <div className={st.wrapper} onClick={() => setShowModal(false)}>
@@ -53,7 +87,7 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                     />
                 </div>
 
-                {data && value.length > 3 && (
+                {value.length > 3 ? (
                     <div className={st.results}>
                         {filteredValues === null ? (
                             <p className={st.nothing}>
@@ -64,8 +98,12 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                                 <div
                                     tabIndex={0}
                                     key={i.id}
-                                    onClick={() => onClickLink(i.slug)}
-                                    onKeyDown={(e) => handleKey(e, i.slug)}
+                                    onClick={() =>
+                                        onClickLink(i.slug, i.fullTitle)
+                                    }
+                                    onKeyDown={(e) =>
+                                        handleKey(e, i.slug, i.fullTitle)
+                                    }
                                 >
                                     <p>
                                         {i.brand !== "OnePlus" ? i.brand : ""}{" "}
@@ -75,6 +113,28 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                             ))
                         )}
                     </div>
+                ) : (
+                    latestResults.length && (
+                        <>
+                            <div className={st.results}>
+                                <p>Latest results:</p>
+                                {latestResults.map((i) => (
+                                    <div
+                                        tabIndex={0}
+                                        key={i.slug}
+                                        onClick={() =>
+                                            onClickLink(i.slug, i.title)
+                                        }
+                                        onKeyDown={(e) =>
+                                            handleKey(e, i.slug, i.title)
+                                        }
+                                    >
+                                        <p>{i.title}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )
                 )}
             </div>
         </div>
