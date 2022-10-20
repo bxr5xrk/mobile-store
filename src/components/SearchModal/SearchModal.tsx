@@ -1,11 +1,8 @@
-import React, { FC, KeyboardEvent, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import React, { FC, KeyboardEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Service } from "../../api/AlloService";
 import { useDebounce } from "../../hooks/useDebounce";
-import { selectProducts } from "../../store/slices/productsSlice";
-import { useAppDispatch } from "../../store/store";
+import { useFilter } from "../../hooks/useFilter";
 import st from "./SearchModal.module.scss";
 
 interface SearchModalProps {
@@ -14,27 +11,10 @@ interface SearchModalProps {
 
 const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
     const [value, setValue] = useState("");
-    const debouncedValue = useDebounce(value, 500);
-    const { devices } = useSelector(selectProducts);
+    const { data } = Service.fetchAllDevices();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
-    const { i18n } = useTranslation();
-
-    useEffect(() => {
-        devices === null &&
-            dispatch(Service.fetchProducts({ locale: i18n.language }));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const results =
-        debouncedValue.length > 3
-            ? devices &&
-              devices.filter(
-                  (i) =>
-                      i.title.toLowerCase().includes(value.toLowerCase()) ||
-                      i.brand.toLowerCase().includes(value.toLowerCase())
-              )
-            : null;
+    const debouncedValue = useDebounce(value, 500);
+    const { filteredValues } = useFilter(debouncedValue, data);
 
     const onClickLink = (slug: string) => {
         navigate(`products/${slug}`);
@@ -73,10 +53,14 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                     />
                 </div>
 
-                {devices && value.length > 3 && (
+                {data && value.length > 3 && (
                     <div className={st.results}>
-                        {results !== null && results.length > 1 ? (
-                            results.map((i) => (
+                        {filteredValues === null ? (
+                            <p className={st.nothing}>
+                                No results for "{debouncedValue}"
+                            </p>
+                        ) : (
+                            filteredValues.map((i) => (
                                 <div
                                     tabIndex={0}
                                     key={i.id}
@@ -89,10 +73,6 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                                     </p>
                                 </div>
                             ))
-                        ) : (
-                            <p className={st.nothing}>
-                                No results for "{debouncedValue}"
-                            </p>
                         )}
                     </div>
                 )}

@@ -15,6 +15,7 @@ export const GET_ALL_DEVICES = gql`
                 imageHref
             }
             deviceColors {
+                id
                 color {
                     hex
                 }
