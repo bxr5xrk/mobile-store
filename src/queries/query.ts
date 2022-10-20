@@ -1,30 +1,27 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_DEVICES = gql`
-    query getDevices {
+    query getAllDevices {
         devices {
             slug
-            deviceName
-            deviceColor {
-                color
-                id
-                additionalPrice
-            }
-            storages {
-                romRam
-                id
-                price
-            }
-            brand
-            battery
-            displaySize
-            processor
+            title
+            fullTitle
             id
-            addingDate
+            price
+            processor
+            storage
             images {
-                imageHref
                 id
+                imageHref
             }
+            deviceColors {
+                color {
+                    hex
+                }
+            }
+            battery
+            brand
+            additionDate
         }
     }
 `;

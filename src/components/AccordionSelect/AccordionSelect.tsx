@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectFilter } from "../../store/slices/filterSlice";
-import Checkbox from "../Checkbox/Checkox";
+import Checkbox from "../Checkbox";
 import st from "./AccordionSelect.module.scss";
 
 interface AccordionSelectProps {

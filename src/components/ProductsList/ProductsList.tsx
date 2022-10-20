@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Service } from "../../api/AlloService";
 import { selectFilter } from "../../store/slices/filterSlice";
-import { selectProducts } from "../../store/slices/productsSlice";
 import { selectProductsView } from "../../store/slices/productsViewSlice";
 import SQ from "../../utils/parseSearchQuery";
 import { sortItems } from "../../utils/sortItems";
@@ -12,7 +12,9 @@ import st from "./ProductsList.module.scss";
 
 const ProductsList: FC = () => {
     const navigate = useNavigate();
-    const { devices } = useSelector(selectProducts);
+
+    const { data } = Service.fetchAllDevices();
+
     const { activeView } = useSelector(selectProductsView);
     const { sortingType, priceValues, activeFilters } =
         useSelector(selectFilter);
@@ -28,9 +30,9 @@ const ProductsList: FC = () => {
         <section className={st.root}>
             {activeView === 1 ? (
                 <div className={st.gridView}>
-                    {devices &&
+                    {data &&
                         sortItems({
-                            devices,
+                            data,
                             sortingType,
                             priceValues,
                             brands: activeFilters.brands,
@@ -51,8 +53,8 @@ const ProductsList: FC = () => {
                 </div>
             ) : (
                 <div className={st.listView}>
-                    {devices &&
-                        devices.map((device) => (
+                    {data &&
+                        data.map((device) => (
                             <ProductListView
                                 key={device.id}
                                 title={device.title}

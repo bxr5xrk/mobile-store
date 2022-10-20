@@ -19,7 +19,7 @@ const Sidebar = () => {
     const { devices, filters } = useSelector(selectProducts);
     const { activeFilters } = useSelector(selectFilter);
 
-    // parse search query at the begining
+    // parse search query at the beginning
     ParseSearchQueryInMount({
         activeFilters,
     });

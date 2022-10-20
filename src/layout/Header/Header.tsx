@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { themes } from "../../.config";
 import { Service } from "../../api/AlloService";
 import MobileMenu from "../../components/MobileMenu/MobileMenu";
 import Search from "../../components/Search/Search";
-import { selectProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../store/store";
 import { themeType } from "../../types";
 import st from "./Header.module.scss";
@@ -79,7 +77,7 @@ export const Header = () => {
     const dispatch = useAppDispatch();
     const { i18n } = useTranslation();
     const [showBurger, setShowBurger] = useState(false);
-    const { devices } = useSelector(selectProducts);
+    // const { devices } = useSelector(selectProducts);
     const navigate = useNavigate();
     const LSTheme = localStorage.getItem("theme") || "light";
     const [theme, setTheme] = useState<themeType>(LSTheme as themeType);
@@ -99,11 +97,15 @@ export const Header = () => {
 
     // fetch all devices
     useEffect(() => {
-        if (!devices) {
+        if (!data) {
             dispatch(Service.fetchProducts({ locale: i18n.language }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [i18n.language]);
+    
+    const { error, loading, data } = Service.fetchAllDevices();
+
+    console.log(data, error, loading);
 
     const changeCookie = () => {
         i18n.changeLanguage(i18n.language === "en" ? "uk" : "en");

@@ -1,7 +1,7 @@
 import { IDevice } from "../types/index";
 
 interface sortedItemsProps {
-    devices: IDevice[];
+    data: IDevice[];
     sortingType: string;
     priceValues: { min: number; max: number };
     brands: string[];
@@ -11,7 +11,7 @@ interface sortedItemsProps {
 }
 
 export const sortItems = ({
-    devices,
+    data,
     sortingType,
     priceValues,
     brands,
@@ -19,7 +19,7 @@ export const sortItems = ({
     rom,
     colors,
 }: sortedItemsProps) => {
-    const sortedArr = [...devices]
+    const sortedArr = [...data]
         .filter((i) => i.price >= priceValues.min && i.price <= priceValues.max)
         .filter((i) => (brands.length ? brands.includes(i.brand) : i))
         .filter((i) => (ram.length ? ram.includes(i.storage.split("-")[0]) : i))

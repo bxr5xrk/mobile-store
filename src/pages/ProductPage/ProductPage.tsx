@@ -1,27 +1,14 @@
-import { useQuery } from "@apollo/client";
 import { FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { GET_SINGLE_DEVICE } from "../../queries/query";
-import { IDevice } from "../../types";
-
-const FetchSingleDevice = (slugParams?: string) => {
-    const { loading, error, data } = useQuery<{ device: IDevice }>(
-        GET_SINGLE_DEVICE,
-        {
-            variables: { slug: slugParams },
-        }
-    );
-
-    return { loading, error, data: data?.device };
-};
+import { Service } from "../../api/AlloService";
 
 const ProductPage: FC = () => {
     const { slugParams } = useParams();
     const navigate = useNavigate();
 
-    const { loading, error, data } = FetchSingleDevice(slugParams);
+    const { loading, error, data } = Service.fetchSingleDevice(slugParams);
 
-    if (loading) console.log("loading");
+    if (loading) return <h1>loading...</h1>;
 
     if (error) return <h1>error</h1>;
 

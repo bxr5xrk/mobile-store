@@ -13,25 +13,6 @@ const BreadCrumbs: FC = () => {
 
     const brandsParams = activeFilters.brands;
 
-    // const links = [
-    //     {
-    //         id: 1,
-    //         link: "/products",
-    //         title: {
-    //             en: "Mobile Phones",
-    //             uk: "Мобільні телефони",
-    //         },
-    //     },
-    //     {
-    //         id: 2,
-    //         link: "/products",
-    //         title: {
-    //             en: '',
-    //             uk: "Мобільні телефони",
-    //         },
-    //     },
-    // ];
-
     return (
         <div className={st.root}>
             <div>

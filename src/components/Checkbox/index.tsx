@@ -12,12 +12,7 @@ interface CheckBoxProps {
     styles: string;
 }
 
-const Checkbox: FC<CheckBoxProps> = ({
-    title,
-    checked,
-    id,
-    styles,
-}) => {
+const Checkbox: FC<CheckBoxProps> = ({ title, checked, id, styles }) => {
     const { activeFilters } = useSelector(selectFilter);
     const dispatch = useAppDispatch();
     return (
