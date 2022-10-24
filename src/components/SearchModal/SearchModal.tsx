@@ -35,7 +35,7 @@ const setLatestResults = (item: ILatestResult) => {
 
 const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
     const [value, setValue] = useState("");
-    const { data } = Service.fetchAllDevices({ page: 1 });
+    const { data } = Service.searchDevice();
     const navigate = useNavigate();
     const debouncedValue = useDebounce(value, 500);
     const { filteredValues } = useFilter(debouncedValue, data);
@@ -113,28 +113,22 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                             ))
                         )}
                     </div>
-                ) : (
-                    latestResults.length && (
-                        <>
-                            <div className={st.results}>
-                                <p>Latest results:</p>
-                                {latestResults.reverse().map((i) => (
-                                    <div
-                                        tabIndex={0}
-                                        key={i.slug}
-                                        onClick={() =>
-                                            onClickLink(i.slug, i.title)
-                                        }
-                                        onKeyDown={(e) =>
-                                            handleKey(e, i.slug, i.title)
-                                        }
-                                    >
-                                        <p>{i.title}</p>
-                                    </div>
-                                ))}
+                ) : latestResults.length ? (
+                    <div className={st.results}>
+                        <p>Latest results:</p>
+                        {latestResults.reverse().map((i) => (
+                            <div
+                                tabIndex={0}
+                                key={i.slug}
+                                onClick={() => onClickLink(i.slug, i.title)}
+                                onKeyDown={(e) => handleKey(e, i.slug, i.title)}
+                            >
+                                <p>{i.title}</p>
                             </div>
-                        </>
-                    )
+                        ))}
+                    </div>
+                ) : (
+                    <></>
                 )}
             </div>
         </div>

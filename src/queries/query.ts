@@ -1,7 +1,19 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_DEVICES = gql`
-    query getAllDevices ($skip: Int!) {
+    query getAllDevices {
+        devices {
+            title
+            fullTitle
+            id
+            brand
+            slug
+        }
+    }
+`;
+
+export const GET_LIMITED_DEVICES = gql`
+    query getLimitedDevices($skip: Int!) {
         devices(first: 3, skip: $skip) {
             slug
             title

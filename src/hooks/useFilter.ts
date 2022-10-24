@@ -1,6 +1,9 @@
 import { IDevice } from "../types";
 
-export const useFilter = (value: string, data?: IDevice[]) => {
+export const useFilter = (
+    value: string,
+    data?: Pick<IDevice, "title" | "fullTitle" | "id" | "brand" | "slug">[]
+) => {
     const newValue = value.trim();
     if (newValue.length < 3) {
         return { filteredValues: null };

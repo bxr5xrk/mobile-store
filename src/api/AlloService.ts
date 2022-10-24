@@ -1,4 +1,4 @@
-import { GET_ALL_DEVICES } from "./../queries/query";
+import { GET_ALL_DEVICES, GET_LIMITED_DEVICES } from "./../queries/query";
 import { GET_SINGLE_DEVICE, QUERY_ALL_DATA } from "../queries/query";
 import { CONTENT_API } from "./../.data";
 import { IAllData, IDevice, IGetAllDevicesProps } from "./../types/index";
@@ -36,15 +36,26 @@ export class Service {
         return { loading, error, data: data?.device };
     };
 
-    // static searchDevice = (title: string) => {
-    //     const
-    // }
+    static searchDevice = () => {
+        const { loading, error, data } = useQuery<{
+            devices: Pick<
+                IDevice,
+                "title" | "fullTitle" | "id" | "brand" | "slug"
+            >[];
+        }>(GET_ALL_DEVICES);
+
+        return {
+            loading,
+            error,
+            data: data?.devices,
+        };
+    };
 
     static fetchAllDevices = ({ page }: { page: number }) => {
         const skip = page * limitItems - limitItems;
 
         const { loading, error, data } = useQuery<IGetAllDevicesProps>(
-            GET_ALL_DEVICES,
+            GET_LIMITED_DEVICES,
             { variables: { skip } }
         );
 
