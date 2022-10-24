@@ -1,11 +1,12 @@
 import { GET_ALL_DEVICES } from "./../queries/query";
 import { GET_SINGLE_DEVICE, QUERY_ALL_DATA } from "../queries/query";
 import { CONTENT_API } from "./../.data";
-import { IAllData, IDevice } from "./../types/index";
+import { IAllData, IDevice, IGetAllDevicesProps } from "./../types/index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import request from "graphql-request";
 import { QUERY_SINGLE } from "../queries/query";
 import { useQuery } from "@apollo/client";
+import { getPages } from "../utils/getPages";
 
 export class Service {
     static fetchProducts = createAsyncThunk(
@@ -33,12 +34,28 @@ export class Service {
 
         return { loading, error, data: data?.device };
     };
-    static fetchAllDevices = () => {
-        const { loading, error, data } = useQuery<{ devices: IDevice[] }>(
-            GET_ALL_DEVICES
+
+    // static searchDevice = (title: string) => {
+    //     const
+    // }
+
+    static fetchAllDevices = ({ page }: { page: number }) => {
+        const skip = page * 3 - 3;
+
+        const { loading, error, data } = useQuery<IGetAllDevicesProps>(
+            GET_ALL_DEVICES,
+            { variables: { skip } }
         );
 
-        return { loading, error, data: data?.devices };
+        const totalPages =
+            data && getPages(data.devicesConnection.aggregate.count);
+
+        return {
+            loading,
+            error,
+            data: data?.devices,
+            totalPages,
+        };
     };
 
     static fetchProduct = async (

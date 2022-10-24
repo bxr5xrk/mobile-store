@@ -58,3 +58,15 @@ export interface IFilterType {
 }
 
 export type themeType = "light" | "dark";
+
+export interface IPagesCount {
+    devicesConnection: {
+        aggregate: {
+            count: number;
+        };
+    };
+}
+
+export interface IGetAllDevicesProps extends IPagesCount {
+    devices: IDevice[];
+}

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Service } from "../../api/AlloService";
@@ -6,6 +6,7 @@ import { selectFilter } from "../../store/slices/filterSlice";
 import { selectProductsView } from "../../store/slices/productsViewSlice";
 import SQ from "../../utils/parseSearchQuery";
 import { sortItems } from "../../utils/sortItems";
+import Pagination from "../Pagination";
 import ProductGridView from "../ProductGridView/ProductGridView";
 import ProductListView from "../ProductListView/ProductListView";
 import st from "./ProductsList.module.scss";
@@ -13,7 +14,9 @@ import st from "./ProductsList.module.scss";
 const ProductsList: FC = () => {
     const navigate = useNavigate();
 
-    const { data } = Service.fetchAllDevices();
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const { data, totalPages } = Service.fetchAllDevices({ page: currentPage });
 
     const { activeView } = useSelector(selectProductsView);
     const { sortingType, priceValues, activeFilters } =
@@ -69,6 +72,13 @@ const ProductsList: FC = () => {
                             />
                         ))}
                 </div>
+            )}
+            {totalPages && (
+                <Pagination
+                    totalPages={totalPages}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
             )}
         </section>
     );

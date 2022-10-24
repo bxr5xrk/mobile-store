@@ -96,13 +96,13 @@ export const Header = () => {
 
     // fetch all devices
     useEffect(() => {
-        if (!data) {
+        // if (!data) {
             dispatch(Service.fetchProducts({ locale: i18n.language }));
-        }
+        // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [i18n.language]);
 
-    const { data } = Service.fetchAllDevices();
+    // const { data } = Service.fetchAllDevices({page: 1});
 
     const changeCookie = () => {
         i18n.changeLanguage(i18n.language === "en" ? "uk" : "en");

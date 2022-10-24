@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_ALL_DEVICES = gql`
-    query getAllDevices {
-        devices {
+    query getAllDevices ($skip: Int!) {
+        devices(first: 3, skip: $skip) {
             slug
             title
             fullTitle
@@ -23,6 +23,11 @@ export const GET_ALL_DEVICES = gql`
             battery
             brand
             additionDate
+        }
+        devicesConnection {
+            aggregate {
+                count
+            }
         }
     }
 `;

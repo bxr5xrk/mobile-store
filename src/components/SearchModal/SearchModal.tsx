@@ -35,7 +35,7 @@ const setLatestResults = (item: ILatestResult) => {
 
 const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
     const [value, setValue] = useState("");
-    const { data } = Service.fetchAllDevices();
+    const { data } = Service.fetchAllDevices({ page: 1 });
     const navigate = useNavigate();
     const debouncedValue = useDebounce(value, 500);
     const { filteredValues } = useFilter(debouncedValue, data);
@@ -118,7 +118,7 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
                         <>
                             <div className={st.results}>
                                 <p>Latest results:</p>
-                                {latestResults.map((i) => (
+                                {latestResults.reverse().map((i) => (
                                     <div
                                         tabIndex={0}
                                         key={i.slug}
