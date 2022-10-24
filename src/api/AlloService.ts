@@ -7,6 +7,7 @@ import request from "graphql-request";
 import { QUERY_SINGLE } from "../queries/query";
 import { useQuery } from "@apollo/client";
 import { getPages } from "../utils/getPages";
+import { limitItems } from "../.config";
 
 export class Service {
     static fetchProducts = createAsyncThunk(
@@ -40,7 +41,7 @@ export class Service {
     // }
 
     static fetchAllDevices = ({ page }: { page: number }) => {
-        const skip = page * 3 - 3;
+        const skip = page * limitItems - limitItems;
 
         const { loading, error, data } = useQuery<IGetAllDevicesProps>(
             GET_ALL_DEVICES,
@@ -48,7 +49,8 @@ export class Service {
         );
 
         const totalPages =
-            data && getPages(data.devicesConnection.aggregate.count);
+            data &&
+            getPages(data.devicesConnection.aggregate.count, limitItems);
 
         return {
             loading,

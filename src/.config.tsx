@@ -1,6 +1,8 @@
 // export const CONTENT_API =
 //     "https://api-eu-central-1.hygraph.com/v2/cl76ltawo0ae601ui48jvavxt/master";
 
+export const limitItems = 3
+
 export const themes = {
     dark: [
         { variable: "--background", value: "#202124" },
