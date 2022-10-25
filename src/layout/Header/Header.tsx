@@ -102,8 +102,8 @@ export const Header = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [i18n.language]);
 
-    // const { data } = Service.fetchAllDevices({page: 1});
-
+    // const {  data } = Service.fetchFilters()
+ 
     const changeCookie = () => {
         i18n.changeLanguage(i18n.language === "en" ? "uk" : "en");
         document.cookie = "";

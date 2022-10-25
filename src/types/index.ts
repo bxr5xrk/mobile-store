@@ -45,6 +45,15 @@ export interface IFilter {
     filterValues: IValue[];
 }
 
+export interface IFilterValue {
+    id: number;
+    title: string;
+    filterValues: {
+        id: number;
+        value: string;
+    };
+}
+
 export interface IAllData {
     devices: IDevice[];
     filterTypes: IFilter[];

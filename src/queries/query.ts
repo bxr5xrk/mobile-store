@@ -12,6 +12,19 @@ export const GET_ALL_DEVICES = gql`
     }
 `;
 
+export const GET_FILTERS = gql`
+    query getFilters {
+        filterTypes {
+            id
+            title
+            filterValues {
+                id
+                value
+            }
+        }
+    }
+`;
+
 export const GET_LIMITED_DEVICES = gql`
     query getLimitedDevices($skip: Int!) {
         devices(first: 3, skip: $skip) {

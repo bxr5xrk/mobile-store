@@ -1,10 +1,13 @@
-import { GET_ALL_DEVICES, GET_LIMITED_DEVICES } from "./../queries/query";
+import {
+    GET_ALL_DEVICES,
+    GET_FILTERS,
+    GET_LIMITED_DEVICES,
+} from "./../queries/query";
 import { GET_SINGLE_DEVICE, QUERY_ALL_DATA } from "../queries/query";
 import { CONTENT_API } from "./../.data";
-import { IAllData, IDevice, IGetAllDevicesProps } from "./../types/index";
+import { IAllData, IDevice, IFilterValue, IGetAllDevicesProps } from "./../types/index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import request from "graphql-request";
-import { QUERY_SINGLE } from "../queries/query";
 import { useQuery } from "@apollo/client";
 import { getPages } from "../utils/getPages";
 import { limitItems } from "../.config";
@@ -24,6 +27,16 @@ export class Service {
             return data;
         }
     );
+
+    static fetchFilters = () => {
+        const { loading, error, data } = useQuery<{filterTypes: IFilterValue}>(GET_FILTERS);
+
+        return {
+            loading,
+            error,
+            data: data?.filterTypes,
+        };
+    };
 
     static fetchSingleDevice = (slugParams?: string) => {
         const { loading, error, data } = useQuery<{ device: IDevice }>(
@@ -71,29 +84,29 @@ export class Service {
         };
     };
 
-    static fetchProduct = async (
-        setProduct: (p: IDevice | "error") => void,
-        slug: string
-    ) => {
-        try {
-            const variables = {
-                slug,
-            };
+    // static fetchProduct = async (
+    //     setProduct: (p: IDevice | "error") => void,
+    //     slug: string
+    // ) => {
+    //     try {
+    //         const variables = {
+    //             slug,
+    //         };
 
-            const { device } = await request<{ device: IDevice }>(
-                CONTENT_API,
-                QUERY_SINGLE,
-                variables
-            );
-            console.log(device);
+    //         const { device } = await request<{ device: IDevice }>(
+    //             CONTENT_API,
+    //             QUERY_SINGLE,
+    //             variables
+    //         );
+    //         console.log(device);
 
-            if (device !== null) {
-                return setProduct(device);
-            } else {
-                return setProduct("error");
-            }
-        } catch (e) {
-            console.error(e);
-        }
-    };
+    //         if (device !== null) {
+    //             return setProduct(device);
+    //         } else {
+    //             return setProduct("error");
+    //         }
+    //     } catch (e) {
+    //         console.error(e);
+    //     }
+    // };
 }
