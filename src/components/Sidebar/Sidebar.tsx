@@ -1,14 +1,15 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { filterValues } from "../../.config";
+import { Service } from "../../api/AlloService";
 import {
     selectFilter,
     setActiveFilters,
     setPrice,
 } from "../../store/slices/filterSlice";
-import { selectProducts } from "../../store/slices/productsSlice";
 import { useAppDispatch } from "../../store/store";
-import { getPrice } from "../../utils/getMinPrice";
+import { getPrice } from "../../utils/getPrice";
 import { ParseSearchQueryInMount } from "../../utils/parseSearchQueryInMount";
 import AccordionSelect from "../AccordionSelect/AccordionSelect";
 import MultiRangeSlider from "../MultiRangeSlider/MultiRangeSlider";
@@ -17,8 +18,9 @@ import st from "./Sidebar.module.scss";
 const Sidebar = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const { devices } = useSelector(selectProducts);
+    const { data: devices } = Service.fetchAllDevices();
     const { activeFilters } = useSelector(selectFilter);
+    const [priceVales, setPriceVales] = useState({ min: 0, max: 0 });
 
     // parse search query at the beginning
     ParseSearchQueryInMount({
@@ -28,6 +30,7 @@ const Sidebar = () => {
     if (!devices) {
         return <>error</>;
     }
+    const priceArr = devices.map((i) => i.price);
 
     const resetAll = () => {
         dispatch(
@@ -40,11 +43,17 @@ const Sidebar = () => {
         );
         dispatch(
             setPrice({
-                min: Number(getPrice(devices, "min")),
-                max: Number(getPrice(devices, "max")),
+                min: Number(getPrice(priceArr, "min")),
+                max: Number(getPrice(priceArr, "max")),
             })
         );
     };
+
+    const applyActiveFilters = () => {
+        dispatch(setPrice(priceVales))
+    }
+
+    console.log(priceVales)
 
     return (
         <aside className={st.root}>
@@ -67,9 +76,9 @@ const Sidebar = () => {
             {devices.length > 1 && (
                 <div className={st.filterTypes}>
                     <MultiRangeSlider
-                        min={getPrice(devices, "min")}
-                        max={getPrice(devices, "max")}
-                        onChange={({min, max}) => console.log(min, max)}
+                        min={getPrice(priceArr, "min")}
+                        max={getPrice(priceArr, "max")}
+                        onChange={({ min, max }) => setPriceVales({ min, max })}
                     />
                     {filterValues.map((i) => (
                         <AccordionSelect
@@ -81,6 +90,7 @@ const Sidebar = () => {
                     ))}
                 </div>
             )}
+            <button onClick={applyActiveFilters}>Apply filters</button>
         </aside>
     );
 };

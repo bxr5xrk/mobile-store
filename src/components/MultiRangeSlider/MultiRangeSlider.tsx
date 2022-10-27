@@ -21,6 +21,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
     const minValRef = useRef(min);
     const maxValRef = useRef(max);
     const range = useRef<HTMLInputElement>(null);
+    const step = 500
 
     // Convert to percentage
     const getPercent = useCallback(
@@ -62,6 +63,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
                 min={min}
                 max={max}
                 value={minVal}
+                step={step}
                 onChange={(event) => {
                     const value = Math.min(
                         Number(event.target.value),
@@ -77,6 +79,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = ({
                 type="range"
                 min={min}
                 max={max}
+                step={step}
                 value={maxVal}
                 onChange={(event) => {
                     const value = Math.max(

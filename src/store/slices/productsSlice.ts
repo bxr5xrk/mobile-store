@@ -5,7 +5,7 @@ import { IDevice } from "../../types";
 import { RootState } from "../store";
 
 interface IData {
-    devices: null | IDevice[];
+    devices: null |IDevice[];
     filters: null | IFilter[];
     status: "loading" | "success" | "rejected";
 }
