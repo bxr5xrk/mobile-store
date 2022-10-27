@@ -7,7 +7,7 @@ import st from "./AccordionSelect.module.scss";
 interface AccordionSelectProps {
     title: string;
     items: string[];
-    id: string;
+    id: number;
 }
 
 const AccordionSelect: FC<AccordionSelectProps> = ({ title, items, id }) => {
@@ -15,11 +15,11 @@ const AccordionSelect: FC<AccordionSelectProps> = ({ title, items, id }) => {
     const { activeFilters } = useSelector(selectFilter);
 
     const currentFilter =
-        id === "cl7onewcbakui0duq4nwe25wo"
+        id === 1
             ? activeFilters.brands
-            : id === "cl7owgcuunfk40atecqpji7au"
+            : id === 2
             ? activeFilters.ram
-            : id === "cl7owj2ikwyjj0atcizfjeqpp"
+            : id === 3
             ? activeFilters.rom
             : activeFilters.colors;
 

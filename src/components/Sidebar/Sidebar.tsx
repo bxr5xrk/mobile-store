@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
+import { filterValues } from "../../.config";
 import {
     selectFilter,
     setActiveFilters,
@@ -16,7 +17,7 @@ import st from "./Sidebar.module.scss";
 const Sidebar = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const { devices, filters } = useSelector(selectProducts);
+    const { devices } = useSelector(selectProducts);
     const { activeFilters } = useSelector(selectFilter);
 
     // parse search query at the beginning
@@ -24,7 +25,7 @@ const Sidebar = () => {
         activeFilters,
     });
 
-    if (!devices || !filters) {
+    if (!devices) {
         return <>error</>;
     }
 
@@ -69,7 +70,7 @@ const Sidebar = () => {
                         min={getPrice(devices, "min") - 100}
                         max={getPrice(devices, "max") + 100}
                     />
-                    {filters.map((i) => (
+                    {filterValues.map((i) => (
                         <AccordionSelect
                             key={i.id + i.title}
                             title={i.title}

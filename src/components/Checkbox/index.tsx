@@ -8,7 +8,7 @@ import st from "./Checkbox.module.scss";
 interface CheckBoxProps {
     title: string;
     checked: boolean;
-    id: string;
+    id: number;
     styles: string;
 }
 

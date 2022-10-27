@@ -2,15 +2,15 @@ import { IFilterType } from "../types";
 
 export const changeFilterValue = (
     activeFilters: IFilterType,
-    id: string,
+    id: number,
     value: string
 ) => {
     const item =
-        id === "cl7onewcbakui0duq4nwe25wo"
+        id === 1
             ? activeFilters.brands
-            : id === "cl7owgcuunfk40atecqpji7au"
+            : id === 2
             ? activeFilters.ram
-            : id === "cl7owj2ikwyjj0atcizfjeqpp"
+            : id === 3
             ? activeFilters.rom
             : activeFilters.colors;
 
@@ -23,17 +23,17 @@ export const changeFilterValue = (
         ? [...item.filter((i) => i !== value)]
         : [...item, value];
 
-    return id === "cl7onewcbakui0duq4nwe25wo"
+    return id === 1
         ? {
               ...activeFilters,
               brands: values,
           }
-        : id === "cl7owgcuunfk40atecqpji7au"
+        : id === 2
         ? {
               ...activeFilters,
               ram: values,
           }
-        : id === "cl7owj2ikwyjj0atcizfjeqpp"
+        : id === 3
         ? {
               ...activeFilters,
               rom: values,

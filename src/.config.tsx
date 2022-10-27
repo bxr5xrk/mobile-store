@@ -1,7 +1,7 @@
 // export const CONTENT_API =
 //     "https://api-eu-central-1.hygraph.com/v2/cl76ltawo0ae601ui48jvavxt/master";
 
-export const limitItems = 3
+export const limitItems = 3;
 
 export const themes = {
     dark: [
@@ -15,6 +15,75 @@ export const themes = {
         { variable: "--text", value: "black" },
     ],
 };
+
+export const filterValues = [
+    {
+        id: 1,
+        title: "Brands",
+        filterValues: [
+            {
+                value: "Apple",
+            },
+            {
+                value: "Google",
+            },
+            {
+                value: "OnePlus",
+            },
+        ],
+    },
+    {
+        id: 2,
+        title: "RAM",
+        filterValues: [
+            {
+                value: "4",
+            },
+            {
+                value: "8",
+            },
+            {
+                value: "12",
+            },
+        ],
+    },
+    {
+        id: 3,
+        title: "ROM",
+        filterValues: [
+            {
+                value: "64",
+            },
+            {
+                value: "128",
+            },
+            {
+                value: "256",
+            },
+        ],
+    },
+    {
+        id: 4,
+        title: "Color",
+        filterValues: [
+            {
+                value: "#000000",
+            },
+            {
+                value: "#417505",
+            },
+            {
+                value: "#9b9b9b",
+            },
+            {
+                value: "#ffc0cb",
+            },
+            {
+                value: "#4a90e2",
+            },
+        ],
+    },
+];
 
 export const sortingTypes = [
     { value: "popularity", title: "by popularity", id: 1 },
