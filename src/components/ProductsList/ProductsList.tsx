@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Service } from "../../api/AlloService";
+import { usePagination } from "../../hooks/usePagination";
 import { selectFilter } from "../../store/slices/filterSlice";
 import { selectProductsView } from "../../store/slices/productsViewSlice";
 import SQ from "../../utils/parseSearchQuery";
@@ -14,9 +15,11 @@ import st from "./ProductsList.module.scss";
 const ProductsList: FC = () => {
     const navigate = useNavigate();
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(2);
 
-    const { data, totalPages } = Service.fetchAllDevices({ page: currentPage });
+    const { data: devices, totalPages } = Service.fetchAllDevices();
+
+    const { data } = usePagination(devices || [], currentPage)
 
     const { activeView } = useSelector(selectProductsView);
     const { sortingType, priceValues, activeFilters } =

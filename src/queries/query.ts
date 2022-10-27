@@ -26,8 +26,8 @@ export const GET_FILTERS = gql`
 `;
 
 export const GET_LIMITED_DEVICES = gql`
-    query getLimitedDevices($skip: Int!) {
-        devices(first: 3, skip: $skip) {
+    query getLimitedDevices {
+        devices {
             slug
             title
             fullTitle

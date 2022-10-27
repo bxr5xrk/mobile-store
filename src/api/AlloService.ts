@@ -9,8 +9,8 @@ import { IAllData, IDevice, IFilterValue, IGetAllDevicesProps } from "./../types
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import request from "graphql-request";
 import { useQuery } from "@apollo/client";
-import { getPages } from "../utils/getPages";
 import { limitItems } from "../.config";
+import { getPages } from "../utils/getPages";
 
 export class Service {
     static fetchProducts = createAsyncThunk(
@@ -64,17 +64,15 @@ export class Service {
         };
     };
 
-    static fetchAllDevices = ({ page }: { page: number }) => {
-        const skip = page * limitItems - limitItems;
-
+    static fetchAllDevices = () => {
         const { loading, error, data } = useQuery<IGetAllDevicesProps>(
-            GET_LIMITED_DEVICES,
-            { variables: { skip } }
+            GET_LIMITED_DEVICES
         );
 
         const totalPages =
             data &&
             getPages(data.devicesConnection.aggregate.count, limitItems);
+        // const totalItems = data && data.devicesConnection.aggregate.count
 
         return {
             loading,

@@ -53,7 +53,7 @@ const Pagination: FC<PaginationProps> = ({
                 condition: currentPage > 2,
             })}
 
-            <button>{currentPage}</button>
+            <button style={{fontWeight: 700}}>{currentPage}</button>
 
             {paginationButton({
                 value:
