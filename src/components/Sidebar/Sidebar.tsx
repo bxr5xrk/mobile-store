@@ -53,8 +53,6 @@ const Sidebar = () => {
         dispatch(setPrice(priceVales))
     }
 
-    console.log(priceVales)
-
     return (
         <aside className={st.root}>
             <div className={st.top}>

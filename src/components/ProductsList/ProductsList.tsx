@@ -15,11 +15,9 @@ import st from "./ProductsList.module.scss";
 const ProductsList: FC = () => {
     const navigate = useNavigate();
 
-    const [currentPage, setCurrentPage] = useState(2);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const { data: devices, totalPages } = Service.fetchAllDevices();
-
-    const { data } = usePagination(devices || [], currentPage)
+    const { data: tmpData } = Service.fetchAllDevices();
 
     const { activeView } = useSelector(selectProductsView);
     const { sortingType, priceValues, activeFilters } =
@@ -32,20 +30,27 @@ const ProductsList: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFilters]);
 
+    const { data: devices, totalPages } = usePagination(
+        sortItems(
+            {
+                data: tmpData ? tmpData : [],
+                sortingType,
+                priceValues,
+                brands: activeFilters.brands,
+                ram: activeFilters.ram,
+                rom: activeFilters.rom,
+                colors: activeFilters.colors,
+            } || []
+        ),
+        currentPage
+    );
+
     return (
         <section className={st.root}>
             {activeView === 1 ? (
                 <div className={st.gridView}>
-                    {data &&
-                        sortItems({
-                            data,
-                            sortingType,
-                            priceValues,
-                            brands: activeFilters.brands,
-                            ram: activeFilters.ram,
-                            rom: activeFilters.rom,
-                            colors: activeFilters.colors,
-                        }).map((device) => (
+                    {devices &&
+                        devices.map((device) => (
                             <ProductGridView
                                 key={device.id}
                                 fullTitle={device.fullTitle}
@@ -59,8 +64,8 @@ const ProductsList: FC = () => {
                 </div>
             ) : (
                 <div className={st.listView}>
-                    {data &&
-                        data.map((device) => (
+                    {devices &&
+                        devices.map((device) => (
                             <ProductListView
                                 key={device.id}
                                 title={device.title}
