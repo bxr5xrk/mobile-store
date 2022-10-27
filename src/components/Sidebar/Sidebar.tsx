@@ -67,8 +67,9 @@ const Sidebar = () => {
             {devices.length > 1 && (
                 <div className={st.filterTypes}>
                     <MultiRangeSlider
-                        min={getPrice(devices, "min") - 100}
-                        max={getPrice(devices, "max") + 100}
+                        min={getPrice(devices, "min")}
+                        max={getPrice(devices, "max")}
+                        onChange={({min, max}) => console.log(min, max)}
                     />
                     {filterValues.map((i) => (
                         <AccordionSelect
