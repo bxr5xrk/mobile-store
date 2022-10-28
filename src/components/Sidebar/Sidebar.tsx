@@ -18,7 +18,7 @@ import st from "./Sidebar.module.scss";
 const Sidebar = () => {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
-    const { data: devices } = Service.fetchAllDevices();
+    const { data: devices, loading } = Service.fetchAllDevices();
     const { activeFilters } = useSelector(selectFilter);
     const [priceValues, setPriceValues] = useState({ min: 0, max: 0 });
     const [localFilterValues, setLocalFilterValues] = useState(tmpFilterValues);
@@ -44,12 +44,18 @@ const Sidebar = () => {
         activeFilters,
     });
 
-    if (!devices) {
-        return <>error</>;
+    if (loading) {
+        return (
+            <aside className={st.root}>
+                <div className={st.top}>
+                    <p>Loading...</p>
+                </div>
+            </aside>
+        );
     }
 
     // for calculating min and max price
-    const priceArr = devices.map((i) => i.price);
+    const priceArr = devices ? devices.map((i) => i.price) : [];
 
     const resetAll = () => {
         dispatch(
@@ -103,7 +109,7 @@ const Sidebar = () => {
                 </svg>
             </div>
 
-            {devices.length > 1 && (
+            {devices && devices.length ? (
                 <div className={st.filterTypes}>
                     <MultiRangeSlider
                         min={getPrice(priceArr, "min")}
@@ -122,7 +128,7 @@ const Sidebar = () => {
                         />
                     ))}
                 </div>
-            )}
+            ) : null}
             <button onClick={applyActiveFilters}>Apply filters</button>
         </aside>
     );

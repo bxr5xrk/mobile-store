@@ -20,7 +20,7 @@ const ProductsList: FC<ProductsListProps> = ({ activeView }) => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const { data: tmpData } = Service.fetchAllDevices();
+    const { data: tmpData, loading } = Service.fetchAllDevices();
 
     const { sortingType, priceValues, activeFilters } =
         useSelector(selectFilter);
@@ -52,7 +52,9 @@ const ProductsList: FC<ProductsListProps> = ({ activeView }) => {
 
     return (
         <section className={st.root}>
-            {activeView === 1 ? (
+            {loading ? (
+                <p>Loading...</p>
+            ) : activeView === 1 ? (
                 <div className={st.gridView}>
                     {devices &&
                         devices.map((device) => (
@@ -86,13 +88,14 @@ const ProductsList: FC<ProductsListProps> = ({ activeView }) => {
                         ))}
                 </div>
             )}
-            {totalPages && (
+
+            {totalPages ? (
                 <Pagination
                     totalPages={totalPages}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                 />
-            )}
+            ) : null}
         </section>
     );
 };
