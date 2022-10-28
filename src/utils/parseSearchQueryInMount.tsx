@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { setActiveFilters } from "../store/slices/filterSlice";
-import { selectProducts } from "../store/slices/productsSlice";
 import { useAppDispatch } from "../store/store";
 import { IFilterType } from "../types";
 import SQ from "./parseSearchQuery";
@@ -14,15 +12,13 @@ export const ParseSearchQueryInMount = ({
     activeFilters,
 }: props) => {
     const dispatch = useAppDispatch();
-    const { filters } = useSelector(selectProducts);
-    const [isMounted, setisMounted] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         const brandsParams = SQ.getParams();
         if (brandsParams) {
-            console.log(brandsParams, filters);
             dispatch(setActiveFilters({ ...activeFilters, ...brandsParams }));
-            setisMounted(true);
+            setIsMounted(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -31,7 +27,7 @@ export const ParseSearchQueryInMount = ({
         if (isMounted) {
             // setFilterTypes(activeFilters);
             dispatch(setActiveFilters(activeFilters))
-            setisMounted(false);
+            setIsMounted(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMounted]);

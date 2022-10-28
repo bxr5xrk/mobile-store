@@ -30,18 +30,20 @@ const ProductsList: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFilters]);
 
+    const filteredData = sortItems(
+        {
+            data: tmpData ? tmpData : [],
+            sortingType,
+            priceValues,
+            brands: activeFilters.brands,
+            ram: activeFilters.ram,
+            rom: activeFilters.rom,
+            colors: activeFilters.colors,
+        } || []
+    );
+
     const { data: devices, totalPages } = usePagination(
-        sortItems(
-            {
-                data: tmpData ? tmpData : [],
-                sortingType,
-                priceValues,
-                brands: activeFilters.brands,
-                ram: activeFilters.ram,
-                rom: activeFilters.rom,
-                colors: activeFilters.colors,
-            } || []
-        ),
+        filteredData,
         currentPage
     );
 

@@ -33,6 +33,10 @@ const Pagination: FC<PaginationProps> = ({
         );
     };
 
+    if (totalPages === 1) {
+        return <></>;
+    }
+
     return (
         <div>
             {paginationButton({
@@ -53,7 +57,7 @@ const Pagination: FC<PaginationProps> = ({
                 condition: currentPage > 2,
             })}
 
-            <button style={{fontWeight: 700}}>{currentPage}</button>
+            <button style={{ fontWeight: 700 }}>{currentPage}</button>
 
             {paginationButton({
                 value:

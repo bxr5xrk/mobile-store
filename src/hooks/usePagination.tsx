@@ -9,6 +9,7 @@ export const usePagination = (data: IDevice[], page: number) => {
     const secondIndex = itemsLimit * page;
 
     const filtered = data.slice(firstIndex, secondIndex);
+    const totalPages = getPages(data.length, itemsLimit);
 
-    return { data: filtered, totalPages: getPages(9, 3) };
+    return { data: filtered, totalPages };
 };
