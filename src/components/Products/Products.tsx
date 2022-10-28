@@ -1,5 +1,6 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { getActiveView } from "../../utils";
 import BreadCrumbs from "../BreadCrumbs/BreadCrumbs";
 import ProductsList from "../ProductsList/ProductsList";
 import SortingTypes from "../SortingTypes/SortingTypes";
@@ -8,6 +9,7 @@ import st from "./Products.module.scss";
 
 const Products: FC = () => {
     const { t } = useTranslation();
+    const [activeView, setActiveView] = useState(getActiveView());
 
     return (
         <div className={st.root}>
@@ -17,10 +19,13 @@ const Products: FC = () => {
 
             <div className={st.sort}>
                 <SortingTypes />
-                <SwitchView />
+                <SwitchView
+                    activeView={activeView}
+                    setActiveView={setActiveView}
+                />
             </div>
 
-            <ProductsList />
+            <ProductsList activeView={activeView} />
         </div>
     );
 };

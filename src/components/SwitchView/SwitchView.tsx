@@ -1,34 +1,33 @@
 import { FC } from "react";
-import { useSelector } from "react-redux";
 import { viewTypes } from "../../.config";
-import {
-    selectProductsView,
-    setActiveView,
-} from "../../store/slices/productsViewSlice";
-import { useAppDispatch } from "../../store/store";
 import st from "./SwitchView.module.scss";
 
-const SwitchView: FC = () => {
-    const { activeView } = useSelector(selectProductsView);
-    const dispatch = useAppDispatch();
+interface SwitchViewProps {
+    activeView: number;
+    setActiveView: (i: number) => void;
+}
 
+const SwitchView: FC<SwitchViewProps> = ({ activeView, setActiveView }) => {
     const onClickChange = (id: number) => {
+        setActiveView(id);
         localStorage.setItem("viewType", String(id));
-        dispatch(setActiveView(id));
     };
 
     return (
         <>
             <div className={st.root}>
-                {viewTypes.map((i) => (
-                    <div
-                        key={i.id}
-                        onClick={() => onClickChange(i.id)}
-                        className={i.id === activeView ? st.active : ""}
-                    >
-                        {i.item}
-                    </div>
-                ))}
+                {viewTypes.map((i) =>
+                    i.id !== activeView ? (
+                        <div
+                            key={i.id}
+                            onClick={() => onClickChange(i.id)}
+                            className={st.active}
+                            title="change items view"
+                        >
+                            {i.item}
+                        </div>
+                    ) : null
+                )}
             </div>
         </>
     );

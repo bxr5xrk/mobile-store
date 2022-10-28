@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { Service } from "../../api/AlloService";
 import { usePagination } from "../../hooks/usePagination";
 import { selectFilter } from "../../store/slices/filterSlice";
-import { selectProductsView } from "../../store/slices/productsViewSlice";
 import SQ from "../../utils/parseSearchQuery";
 import { sortItems } from "../../utils/sortItems";
 import Pagination from "../Pagination";
@@ -12,14 +11,17 @@ import ProductGridView from "../ProductGridView/ProductGridView";
 import ProductListView from "../ProductListView/ProductListView";
 import st from "./ProductsList.module.scss";
 
-const ProductsList: FC = () => {
+interface ProductsListProps {
+    activeView: number;
+}
+
+const ProductsList: FC<ProductsListProps> = ({ activeView }) => {
     const navigate = useNavigate();
 
     const [currentPage, setCurrentPage] = useState(1);
 
     const { data: tmpData } = Service.fetchAllDevices();
 
-    const { activeView } = useSelector(selectProductsView);
     const { sortingType, priceValues, activeFilters } =
         useSelector(selectFilter);
 
