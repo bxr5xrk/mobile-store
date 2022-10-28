@@ -49,11 +49,6 @@ export const GET_LIMITED_DEVICES = gql`
             brand
             additionDate
         }
-        devicesConnection {
-            aggregate {
-                count
-            }
-        }
     }
 `;
 

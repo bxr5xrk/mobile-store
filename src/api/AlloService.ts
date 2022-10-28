@@ -3,33 +3,20 @@ import {
     GET_FILTERS,
     GET_LIMITED_DEVICES,
 } from "./../queries/query";
-import { GET_SINGLE_DEVICE, QUERY_ALL_DATA } from "../queries/query";
-import { CONTENT_API } from "./../.data";
-import { IAllData, IDevice, IFilterValue, IGetAllDevicesProps } from "./../types/index";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import request from "graphql-request";
+import { GET_SINGLE_DEVICE } from "../queries/query";
+import {
+    IDevice,
+    IFilterValue,
+    IGetAllDevicesProps,
+} from "./../types/index";
 import { useQuery } from "@apollo/client";
-import { limitItems } from "../.config";
-import { getPages } from "../utils/getPages";
 
 export class Service {
-    static fetchProducts = createAsyncThunk(
-        "products/fetchProducts",
-        async ({ locale }: { locale: string }) => {
-            const variables = {
-                locale: [locale],
-            };
-            const data = await request<IAllData>(
-                CONTENT_API,
-                QUERY_ALL_DATA,
-                variables
-            );
-            return data;
-        }
-    );
 
     static fetchFilters = () => {
-        const { loading, error, data } = useQuery<{filterTypes: IFilterValue}>(GET_FILTERS);
+        const { loading, error, data } = useQuery<{
+            filterTypes: IFilterValue;
+        }>(GET_FILTERS);
 
         return {
             loading,
@@ -64,47 +51,19 @@ export class Service {
         };
     };
 
-    static fetchAllDevices = () => {
-        const { loading, error, data } = useQuery<IGetAllDevicesProps>(
-            GET_LIMITED_DEVICES
-        );
+    static fetchAllDevices = (lang?: string) => {
+        const locale = lang ? lang : "en";
 
-        const totalPages =
-            data &&
-            getPages(data.devicesConnection.aggregate.count, limitItems);
-        // const totalItems = data && data.devicesConnection.aggregate.count
+        const { loading, error, data, refetch } = useQuery<IGetAllDevicesProps>(
+            GET_LIMITED_DEVICES,
+            { variables: { locale: [locale] } }
+        );
 
         return {
             loading,
             error,
             data: data?.devices,
-            totalPages,
+            refetch,
         };
     };
-
-    // static fetchProduct = async (
-    //     setProduct: (p: IDevice | "error") => void,
-    //     slug: string
-    // ) => {
-    //     try {
-    //         const variables = {
-    //             slug,
-    //         };
-
-    //         const { device } = await request<{ device: IDevice }>(
-    //             CONTENT_API,
-    //             QUERY_SINGLE,
-    //             variables
-    //         );
-    //         console.log(device);
-
-    //         if (device !== null) {
-    //             return setProduct(device);
-    //         } else {
-    //             return setProduct("error");
-    //         }
-    //     } catch (e) {
-    //         console.error(e);
-    //     }
-    // };
 }

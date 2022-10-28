@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { themes } from "../../.config";
-import { Service } from "../../api/AlloService";
 import MobileMenu from "../../components/MobileMenu/MobileMenu";
 import Search from "../../components/Search/Search";
-import { useAppDispatch } from "../../store/store";
+import ToggleLanguage from "../../components/ToggleLanguage";
 import { themeType } from "../../types";
 import st from "./Header.module.scss";
 
@@ -74,8 +72,6 @@ c0.147,1.242,0.187,1.586,0.245,2.333C470.993,183.234,470.174,196.504,466.46,213.
 ];
 
 export const Header = () => {
-    const dispatch = useAppDispatch();
-    const { i18n } = useTranslation();
     const [showBurger, setShowBurger] = useState(false);
     const navigate = useNavigate();
     const LSTheme = localStorage.getItem("theme") || "light";
@@ -93,22 +89,6 @@ export const Header = () => {
         }
         localStorage.setItem("theme", theme);
     }, [theme]);
-
-    // fetch all devices
-    useEffect(() => {
-        // if (!data) {
-            dispatch(Service.fetchProducts({ locale: i18n.language }));
-        // }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [i18n.language]);
-
-    // const {  data } = Service.fetchFilters()
- 
-    const changeCookie = () => {
-        i18n.changeLanguage(i18n.language === "en" ? "uk" : "en");
-        document.cookie = "";
-        document.cookie = `lang=${i18n.language}; path=/`;
-    };
 
     return (
         <>
@@ -129,9 +109,7 @@ export const Header = () => {
                 <Search />
 
                 <menu>
-                    <div className={st.item} onClick={changeCookie}>
-                        <p>{i18n.language === "uk" ? "УКР" : "EN"}</p>
-                    </div>
+                    <ToggleLanguage />
 
                     <div
                         className={st.item}
