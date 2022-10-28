@@ -59,8 +59,6 @@ const SearchModal: FC<SearchModalProps> = ({ setShowModal }) => {
         }
     };
 
-    console.log(latestResults);
-
     return (
         <div className={st.wrapper} onClick={() => setShowModal(false)}>
             <div
