@@ -15,7 +15,6 @@ const BreadCrumbs: FC = () => {
 
     return (
         <div className={st.root}>
-            <div>
                 <Link
                     to="/products"
                     onClick={() =>
@@ -33,13 +32,11 @@ const BreadCrumbs: FC = () => {
                         ? "Мобільні телефони"
                         : "Mobile Phones"}
                 </Link>
-            </div>
             {brandsParams.length ? (
                 <>
                     <span>{" / "}</span>
                     <div>
                         <p>Phones {brandsParams.join(", ")}</p>
-                        <span></span>
                     </div>
                 </>
             ) : (
