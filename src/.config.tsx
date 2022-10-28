@@ -16,6 +16,103 @@ export const themes = {
     ],
 };
 
+export const tmpFilterValues = [
+    {
+        id: 1,
+        title: "Brands",
+        filterValues: [
+            {
+                id: 1,
+                active: false,
+                value: "Apple",
+            },
+            {
+                id: 2,
+                active: false,
+                value: "Google",
+            },
+            {
+                id: 3,
+                active: false,
+                value: "OnePlus",
+            },
+        ],
+    },
+    {
+        id: 2,
+        title: "RAM",
+        filterValues: [
+            {
+                id: 1,
+                active: false,
+                value: "4",
+            },
+            {
+                id: 2,
+                active: false,
+                value: "8",
+            },
+            {
+                id: 3,
+                active: false,
+                value: "12",
+            },
+        ],
+    },
+    {
+        id: 3,
+        title: "ROM",
+        filterValues: [
+            {
+                id: 1,
+                active: false,
+                value: "64",
+            },
+            {
+                id: 2,
+                active: false,
+                value: "128",
+            },
+            {
+                id: 3,
+                active: false,
+                value: "256",
+            },
+        ],
+    },
+    {
+        id: 4,
+        title: "Color",
+        filterValues: [
+            {
+                id: 1,
+                active: false,
+                value: "#000000",
+            },
+            {
+                id: 2,
+                active: false,
+                value: "#417505",
+            },
+            {
+                id: 3,
+                active: false,
+                value: "#9b9b9b",
+            },
+            {
+                id: 4,
+                active: false,
+                value: "#ffc0cb",
+            },
+            {
+                id: 5,
+                active: false,
+                value: "#4a90e2",
+            },
+        ],
+    },
+];
+
 export const filterValues = [
     {
         id: 1,

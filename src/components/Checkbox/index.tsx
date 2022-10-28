@@ -1,40 +1,30 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
-import { selectFilter, setActiveFilters } from "../../store/slices/filterSlice";
-import { useAppDispatch } from "../../store/store";
-import { changeFilterValue } from "../../utils/changeFilterValue";
 import st from "./Checkbox.module.scss";
 
 interface CheckBoxProps {
     title: string;
-    checked: boolean;
+    active: boolean;
+    parentId: number;
     id: number;
-    styles: string;
+    onChange: (parentId: number, childId: number) => void;
 }
 
-const Checkbox: FC<CheckBoxProps> = ({ title, checked, id, styles }) => {
-    const { activeFilters } = useSelector(selectFilter);
-    const dispatch = useAppDispatch();
+const Checkbox: FC<CheckBoxProps> = ({
+    title,
+    active,
+    parentId,
+    id,
+    onChange,
+}) => {
     return (
-        <div
-            className={st.status}
-            onClick={
-                () =>
-                    dispatch(
-                        setActiveFilters(
-                            changeFilterValue(activeFilters, id, title)
-                        )
-                    )
-                // handleClick(changeFilterValue(filterTypes, id, title))
-            }
-        >
+        <div className={st.status} onClick={() => onChange(parentId, id)}>
             <input
                 type="checkbox"
                 className={st.checkbox}
-                checked={checked}
+                checked={active}
                 onChange={() => {}}
             />
-            {checked && (
+            {active && (
                 <svg
                     className={st.check}
                     width="24px"
@@ -47,7 +37,7 @@ const Checkbox: FC<CheckBoxProps> = ({ title, checked, id, styles }) => {
                     <path d="M9.86 18a1 1 0 0 1-.73-.32l-4.86-5.17a1 1 0 1 1 1.46-1.37l4.12 4.39 8.41-9.2a1 1 0 1 1 1.48 1.34l-9.14 10a1 1 0 0 1-.73.33z" />
                 </svg>
             )}
-            <p style={{ color: `${styles !== "" && styles}` }}>{title}</p>
+            <p>{title}</p>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { filterValues } from "../../.config";
+import { tmpFilterValues } from "../../.config";
 import { Service } from "../../api/AlloService";
 import {
     selectFilter,
@@ -20,7 +20,24 @@ const Sidebar = () => {
     const dispatch = useAppDispatch();
     const { data: devices } = Service.fetchAllDevices();
     const { activeFilters } = useSelector(selectFilter);
-    const [priceVales, setPriceVales] = useState({ min: 0, max: 0 });
+    const [priceValues, setPriceValues] = useState({ min: 0, max: 0 });
+    const [localFilterValues, setLocalFilterValues] = useState(tmpFilterValues);
+
+    const changeFilters = (parentId: number, childId: number) => {
+        const copy = [...localFilterValues];
+        const parent = copy.find((i) => i.id === parentId);
+        if (parent) {
+            const parentIndex = copy.indexOf(parent);
+            const child = parent.filterValues.find((i) => i.id === childId);
+            if (child) {
+                child.active = !child.active;
+
+                copy.splice(parentIndex, 1, parent);
+
+                setLocalFilterValues(copy);
+            }
+        }
+    };
 
     // parse search query at the beginning
     ParseSearchQueryInMount({
@@ -30,6 +47,8 @@ const Sidebar = () => {
     if (!devices) {
         return <>error</>;
     }
+
+    // for calculating min and max price
     const priceArr = devices.map((i) => i.price);
 
     const resetAll = () => {
@@ -50,8 +69,21 @@ const Sidebar = () => {
     };
 
     const applyActiveFilters = () => {
-        dispatch(setPrice(priceVales))
-    }
+        dispatch(setPrice(priceValues));
+
+        const getValues = (id: number) =>
+            localFilterValues
+                .find((i) => i.id === id)
+                ?.filterValues.filter((i) => i.active)
+                .map((i) => i.value) || [];
+
+        const brands = getValues(1);
+        const ram = getValues(2);
+        const rom = getValues(4);
+        const colors = getValues(4);
+
+        dispatch(setActiveFilters({ brands, ram, rom, colors }));
+    };
 
     return (
         <aside className={st.root}>
@@ -76,14 +108,17 @@ const Sidebar = () => {
                     <MultiRangeSlider
                         min={getPrice(priceArr, "min")}
                         max={getPrice(priceArr, "max")}
-                        onChange={({ min, max }) => setPriceVales({ min, max })}
+                        onChange={({ min, max }) =>
+                            setPriceValues({ min, max })
+                        }
                     />
-                    {filterValues.map((i) => (
+                    {localFilterValues.map((i) => (
                         <AccordionSelect
-                            key={i.id + i.title}
+                            key={i.id}
                             title={i.title}
-                            items={[...i.filterValues.map((i) => i.value)]}
-                            id={i.id}
+                            items={i.filterValues.map((i) => i)}
+                            parentId={i.id}
+                            onChange={changeFilters}
                         />
                     ))}
                 </div>

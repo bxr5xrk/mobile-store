@@ -28,6 +28,7 @@ const ProductsList: FC<ProductsListProps> = ({ activeView }) => {
     useEffect(() => {
         const query = SQ.setParams(activeFilters);
         navigate(`.${query}`);
+        setCurrentPage(1);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeFilters]);

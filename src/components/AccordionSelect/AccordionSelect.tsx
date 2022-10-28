@@ -1,27 +1,21 @@
 import { FC, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectFilter } from "../../store/slices/filterSlice";
 import Checkbox from "../Checkbox";
 import st from "./AccordionSelect.module.scss";
 
 interface AccordionSelectProps {
     title: string;
-    items: string[];
-    id: number;
+    items: { active: boolean; value: string; id: number }[];
+    parentId: number;
+    onChange: (parentId: number, childId: number) => void;
 }
 
-const AccordionSelect: FC<AccordionSelectProps> = ({ title, items, id }) => {
+const AccordionSelect: FC<AccordionSelectProps> = ({
+    title,
+    items,
+    parentId,
+    onChange,
+}) => {
     const [showDropdown, setShowDropdown] = useState(false);
-    const { activeFilters } = useSelector(selectFilter);
-
-    const currentFilter =
-        id === 1
-            ? activeFilters.brands
-            : id === 2
-            ? activeFilters.ram
-            : id === 3
-            ? activeFilters.rom
-            : activeFilters.colors;
 
     return (
         <div className={st.root}>
@@ -44,15 +38,12 @@ const AccordionSelect: FC<AccordionSelectProps> = ({ title, items, id }) => {
             <div className={`${st.dropdown} ${showDropdown && st.show}`}>
                 {items.map((i) => (
                     <Checkbox
-                        key={i}
-                        title={i}
-                        id={id}
-                        checked={
-                            currentFilter.find((item) => item === i)
-                                ? true
-                                : false
-                        }
-                        styles={`${i.at(0) === "#" ? i : ""}`}
+                        key={i.value}
+                        title={i.value}
+                        active={i.active}
+                        parentId={parentId}
+                        id={i.id}
+                        onChange={onChange}
                     />
                 ))}
             </div>
