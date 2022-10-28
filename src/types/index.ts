@@ -76,6 +76,6 @@ export interface IPagesCount {
     };
 }
 
-export interface IGetAllDevicesProps extends IPagesCount {
+export interface IGetAllDevicesProps {
     devices: IDevice[];
 }
